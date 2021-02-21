@@ -1,0 +1,10 @@
+html,body{
+    height: 100%;
+}
+body{
+    font-family: Microsoft YaHei,Arial,Helvetica, PingFangSC-Regular, Hiragino Sans GB, sans-serif;
+}
+#app{
+    width: 100%;
+    height: 100%;
+}
