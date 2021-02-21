@@ -1,5 +1,5 @@
-import {createWebHashHistory, createRouter} from "vue-router"
-const history = createWebHashHistory()
+import {createRouter, createWebHistory} from "vue-router"
+const history = createWebHistory()
 const router = createRouter({
     history,
     routes: [
@@ -10,6 +10,27 @@ const router = createRouter({
                 {
                     path: "/",
                     component: import("../layouts/HomeLayouts.vue"),
+                    children: [
+                        {
+                            path: "/",
+                            component: import("../page/recommend.vue"),
+                            name: "recommend"
+                        },
+                        {
+                            path: "/recommend",
+                            redirect: "/",
+                        },
+                        {
+                            path: "/singers",
+                            component: import("../page/singers.vue"),
+                            name: "singers"
+                        },
+                        {
+                            path: "/rank",
+                            component: import("../page/rank.vue"),
+                            name: "rank"
+                        }
+                    ]
                 }
             ]
         }
