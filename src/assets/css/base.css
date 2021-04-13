@@ -1,6 +1,13 @@
 html,body{
     height: 100%;
 }
+:root{
+	--THEME: var(--USER-THEME-COLOR,#d44439);
+    --THEME-COLOR: var(--USER-THEME-COLOR,#d44439);
+}
+html{
+	--USER-THEME-COLOR: #d44439;
+}
 body{
     font-family: Microsoft YaHei,Arial,Helvetica, PingFangSC-Regular, Hiragino Sans GB, sans-serif;
 }

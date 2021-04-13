@@ -6,7 +6,7 @@
       <i class="iconfont search">&#xe62b;</i>
     </Top>
     <HomeLayoutContentWrapper>
-      <van-tabs background="#d44439" title-inactive-color="#e4e4e4" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
+      <van-tabs :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
         <van-tab name="recommend" title="推荐" to="/recommend">
           <router-view/>
         </van-tab>
@@ -27,6 +27,7 @@ import Recommend from "../page/recommend.vue"
 import {reactive} from "vue"
 import { useRoute} from "vue-router"
 import {Toast} from "vant"
+import globalStyle from "@/assets/global-style"
 export default {
   components: {
     "HomeLayoutsWrapper": HomeLayoutsWrapper,
@@ -37,7 +38,8 @@ export default {
   setup(){
     const state = reactive({
       count: 0,
-        tabActive: "recommend"
+        tabActive: "recommend",
+        themeColor: globalStyle["theme-color"]
       })
       state.tabActive = useRoute().name
 

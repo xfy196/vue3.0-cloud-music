@@ -1,14 +1,14 @@
 import styled from "vue3-styled-components"
-
-export const HomeLayoutsWrapper = styled.div`
+import globalStyle from "@/assets/global-style"
+export const HomeLayoutsWrapper = styled.div `
     display: flex;
     flex-direction: column;
 `
-export const Top = styled.div`
+export const Top = styled.div `
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#d44439;
+    background-color: ${globalStyle["theme-color"]};
     padding: .05rem .1rem;
     z-index: 2;
     .iconfont{
@@ -22,5 +22,15 @@ export const Top = styled.div`
         font-size: .2rem;
     }
 `
-export const HomeLayoutContentWrapper = styled.div`
+export const HomeLayoutContentWrapper = styled.div `
+position: relative;
+.van-tabs__line{
+    width: .32rem;
+    bottom: .22rem;
+}
+.van-tabs__wrap{
+    position: relative;
+    z-index: 10;
+}
+
 `

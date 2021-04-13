@@ -6,6 +6,6 @@ import "./utils/autoflex"
 import "normalize.css"
 import "./assets/css/base.css"
 import "./assets/iconfont/iconfont.css"
-import vant from "vant"
+import vant, {Lazyload} from "vant"
 import "vant/lib/index.css"
-const app = createApp(App).use(router).use(store).use(vant).mount('#app')
+const app = createApp(App).use(router).use(store).use(vant).use(Lazyload).mount('#app')

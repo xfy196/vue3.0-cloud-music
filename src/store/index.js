@@ -1,8 +1,9 @@
 import {createStore} from "vuex"
+import recommend from "./modules/recommend"
 const store = createStore({
     state(){
         return{
-
+            num: 1,
         }
     },
     mutations: {
@@ -12,7 +13,7 @@ const store = createStore({
 
     },
     modules: {
-        
+        recommend
     }
 })
 

@@ -21,9 +21,9 @@ export default defineConfig({
     outDir: "dist",
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://musicapi.xxytime.top',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '')
+        // rewrite: path => path.replace(/^\/api/, '')
       }
     }
   }
