@@ -5,15 +5,15 @@ const router = createRouter({
     routes: [
         {
             path: "/",
-            component: import("../layouts/BlankLayouts.vue"),
+            component: () => import("../layouts/BlankLayouts.vue"),
             children: [
                 {
                     path: "/",
-                    component: import("../layouts/HomeLayouts.vue"),
+                    component: () => import("../layouts/HomeLayouts.vue"),
                     children: [
                         {
                             path: "/",
-                            component: import("../page/recommend.vue"),
+                            component: () => import("../page/recommend.vue"),
                             name: "recommend"
                         },
                         {
@@ -22,12 +22,12 @@ const router = createRouter({
                         },
                         {
                             path: "/singers",
-                            component: import("../page/singers.vue"),
+                            component: () => import("../page/singers.vue"),
                             name: "singers"
                         },
                         {
                             path: "/rank",
-                            component: import("../page/rank.vue"),
+                            component: () => import("../page/rank.vue"),
                             name: "rank"
                         }
                     ]
