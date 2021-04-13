@@ -2,7 +2,8 @@ import axios from "axios"
 import QS from "qs"
 import {Toast} from "vant"
 const instance = axios.create({
-    timeout: 10000
+    timeout: 10000,
+    baseURL: "https://musicapi.xxytime.top"
 })
 
 instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
