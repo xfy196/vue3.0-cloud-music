@@ -1,4 +1,4 @@
-import {GET_BANNERS, GET_RECOMMEND_LIST} from "./constant"
+import {GET_BANNERS, GET_RECOMMEND_LIST, SET_LOADING} from "./constant"
 import request from "@/request/http"
 export default {
     state: () => {
@@ -15,6 +15,9 @@ export default {
         [GET_RECOMMEND_LIST](state, recommendList){
             state.loading = false
             state.recommendList = recommendList
+        },
+        [SET_LOADING](state, payload){
+            state.loading = payload
         }
     },
     actions: {
@@ -38,7 +41,9 @@ export default {
         }
     },
     getters: {
-
+        loading : (state) => {
+            return state.loading
+        }
     },
     namespaced: true
 }

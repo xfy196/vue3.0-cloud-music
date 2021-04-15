@@ -27,7 +27,7 @@
 <script>
 import TitleCom from "@/baseUI/title/index.vue";
 import { RecommendListStyled, ListStyled } from "./style";
-import { reactive, computed } from "vue";
+import { reactive, computed} from "vue";
 export default {
   components: {
     TitleCom,

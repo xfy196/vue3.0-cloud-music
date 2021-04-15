@@ -32,7 +32,6 @@ height: calc(100% - 0.5rem);
 flex-direction: column;
 .tabs{
     display: flex;
-    flex: 1;
     height: 100%;
     flex-direction: column;
     .van-tabs__line{
@@ -44,8 +43,11 @@ flex-direction: column;
         z-index: 10;
     }
     .van-tabs__content{
-        height: 100%;
-        overflow: auto;
+        height: calc(100% - .44rem);
+        flex: 1;
+        .van-tab__pane{
+            height: 100%;
+        }
     }
 }
 

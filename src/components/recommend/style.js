@@ -14,6 +14,9 @@ position: relative;
     img{
         border-radius: 0.06rem;
     }
+    .loading{
+        z-index: 10
+    }
 }
 `
 export const BeforeStyle = styled.div `

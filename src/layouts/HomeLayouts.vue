@@ -6,7 +6,7 @@
       <i class="iconfont search">&#xe62b;</i>
     </Top>
     <HomeLayoutContentWrapper>
-      <van-tabs :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
+      <van-tabs :sticky="true" :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
         <van-tab name="recommend" title="推荐" to="/recommend">
           <router-view/>
         </van-tab>
@@ -52,7 +52,7 @@ export default {
       }
       return {
         state,
-        handleClickMenu
+        handleClickMenu,
       }
   },
 }
