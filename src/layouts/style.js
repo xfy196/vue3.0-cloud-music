@@ -3,6 +3,7 @@ import globalStyle from "@/assets/global-style"
 export const HomeLayoutsWrapper = styled.div `
     display: flex;
     flex-direction: column;
+    height: 100%;
 `
 export const Top = styled.div `
     display: flex;
@@ -11,6 +12,7 @@ export const Top = styled.div `
     background-color: ${globalStyle["theme-color"]};
     padding: .05rem .1rem;
     z-index: 2;
+    box-sizing: border-box;
     .iconfont{
         line-height: .4rem;
         color: #f1f1f1;
@@ -24,13 +26,27 @@ export const Top = styled.div `
 `
 export const HomeLayoutContentWrapper = styled.div `
 position: relative;
-.van-tabs__line{
-    width: .32rem;
-    bottom: .22rem;
-}
-.van-tabs__wrap{
-    position: relative;
-    z-index: 10;
+flex: 1;
+display: flex;
+height: calc(100% - 0.5rem);
+flex-direction: column;
+.tabs{
+    display: flex;
+    flex: 1;
+    height: 100%;
+    flex-direction: column;
+    .van-tabs__line{
+        width: .32rem;
+        bottom: .22rem;
+    }
+    .van-tabs__wrap{
+        position: relative;
+        z-index: 10;
+    }
+    .van-tabs__content{
+        height: 100%;
+        overflow: auto;
+    }
 }
 
 `

@@ -12,13 +12,13 @@ const router = createRouter({
                     component: () => import("../layouts/HomeLayouts.vue"),
                     children: [
                         {
-                            path: "/",
+                            path: "/recommend",
                             component: () => import("../page/recommend.vue"),
                             name: "recommend"
                         },
                         {
-                            path: "/recommend",
-                            redirect: "/",
+                            path: "/",
+                            redirect: "/recommend",
                         },
                         {
                             path: "/singers",

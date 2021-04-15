@@ -25,7 +25,7 @@
 import {HomeLayoutsWrapper, Top, HomeLayoutContentWrapper} from "./style"
 import Recommend from "../page/recommend.vue"
 import {reactive} from "vue"
-import { useRoute} from "vue-router"
+import {useRoute} from "vue-router"
 import {Toast} from "vant"
 import globalStyle from "@/assets/global-style"
 export default {
