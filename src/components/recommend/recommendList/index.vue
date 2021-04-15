@@ -43,6 +43,9 @@ export default {
   name: "RecommendList",
   setup() {
     const state = reactive({});
+    /**
+     * 重新甲酸payCount的数据
+     */
     const getPlayCount = computed(() => {
       return (palyCount) => {
         return Math.ceil(palyCount / 10000) + "万";
