@@ -1,10 +1,14 @@
 <template>
-  我是排行榜
+  <RankCom></RankCom>
 </template>
 
 <script>
+import RankCom from "@/components/rank/index.vue"
 export default {
-    name: "Rank"
+    name: "Rank",
+    components:{
+      RankCom
+    }
 }
 </script>
 
