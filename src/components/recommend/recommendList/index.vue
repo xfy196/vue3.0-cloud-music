@@ -44,7 +44,7 @@ export default {
   setup() {
     const state = reactive({});
     /**
-     * 重新甲酸payCount的数据
+     * 重新计算payCount的数据
      */
     const getPlayCount = computed(() => {
       return (palyCount) => {

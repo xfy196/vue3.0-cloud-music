@@ -7,10 +7,9 @@
 </template>
 
 <script>
-import {ScrollContainer} from "./index"
-import {reactive, onMounted, watch, nextTick, onUpdated} from "vue"
+import {ScrollContainer} from "./style"
+import {reactive, onMounted, onUpdated} from "vue"
 import BScroll from "better-scroll"
-import { START_LOCATION } from 'vue-router'
 export default {
     name: "Scroll",
     components: {

@@ -1,10 +1,14 @@
 <template>
-  我是歌手页面
+  <SingersCom></SingersCom>
 </template>
 
 <script>
+import SingersCom from "../components/singers/index.vue"
 export default {
-    name: "Singers"
+    name: "Singers",
+    components: {
+      SingersCom
+    }
 }
 </script>
 

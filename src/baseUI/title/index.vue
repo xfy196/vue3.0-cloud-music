@@ -1,5 +1,5 @@
 <template>
-<TitleStyled>
+<TitleStyled class="border">
     <h1>{{title}}</h1>
 </TitleStyled>
 </template>

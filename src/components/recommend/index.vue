@@ -27,7 +27,7 @@ import { RecommendWrapper } from "./style";
 import ScrollCom from "@/packages/scroll/index.vue";
 import Before from "./Before/index.vue";
 import Swiper from "./swiper/index.vue";
-import { reactive, computed, watch, onMounted } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { GET_BANNERS, GET_RECOMMEND_LIST, SET_LOADING } from "@/store/modules/constant";
 import globalStyle from "@/assets/global-style";
