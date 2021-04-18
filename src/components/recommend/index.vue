@@ -5,7 +5,6 @@
         <Before></Before>
         <Swiper :banners="state.banners"></Swiper>
         <RecommendList
-          v-show="!state.loading"
           id="recommend"
           :title="state.title"
           :list="state.list"

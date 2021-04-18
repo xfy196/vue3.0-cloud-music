@@ -1,5 +1,6 @@
 import {createStore} from "vuex"
 import recommend from "./modules/recommend"
+import singers from "./modules/singers"
 const store = createStore({
     state(){
         return{
@@ -13,7 +14,8 @@ const store = createStore({
 
     },
     modules: {
-        recommend
+        recommend,
+        singers
     }
 })
 
