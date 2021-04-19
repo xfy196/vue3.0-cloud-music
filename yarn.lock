@@ -184,7 +184,7 @@
     "@vue/compiler-core" "3.0.11"
     "@vue/shared" "3.0.11"
 
-"@vue/compiler-sfc@^3.0.11", "@vue/compiler-sfc@^3.0.6":
+"@vue/compiler-sfc@^3.0.11":
   "integrity" "sha1-zYyiFUuIlntSH1rTsQ9fi2tmVnk="
   "resolved" "https://registry.npm.taobao.org/@vue/compiler-sfc/download/@vue/compiler-sfc-3.0.11.tgz"
   "version" "3.0.11"
@@ -392,6 +392,11 @@
   "integrity" "sha1-UvAQF4wqTBF6d1fP6UKtt9LaTKw="
   "resolved" "https://registry.npm.taobao.org/estree-walker/download/estree-walker-2.0.2.tgz"
   "version" "2.0.2"
+
+"fastclick@^1.0.6":
+  "integrity" "sha1-FhYlsnsaWAZAWTa9qaLBkm0Gvmo="
+  "resolved" "https://registry.npm.taobao.org/fastclick/download/fastclick-1.0.6.tgz"
+  "version" "1.0.6"
 
 "fbjs@^0.8.12":
   "integrity" "sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90="
@@ -716,7 +721,7 @@
   "resolved" "https://registry.npm.taobao.org/postcss-value-parser/download/postcss-value-parser-4.1.0.tgz"
   "version" "4.1.0"
 
-"postcss@^8.0.0", "postcss@^8.1.0", "postcss@^8.1.10", "postcss@^8.2.1", "postcss@^8.2.10":
+"postcss@^8.1.10", "postcss@^8.2.1", "postcss@^8.2.10":
   "integrity" "sha1-ynoEKqiv9JSzNND/Pp53B59vcCs="
   "resolved" "https://registry.npm.taobao.org/postcss/download/postcss-8.2.10.tgz"
   "version" "8.2.10"
@@ -868,7 +873,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.6.tgz"
   "version" "4.0.6"
 
-"vue@^3.0.0", "vue@^3.0.2", "vue@^3.0.5", "vue@3.0.11":
+"vue@^3.0.5":
   "integrity" "sha1-yC+VlMv03MhpJB1MjdPgjZqPS18="
   "resolved" "https://registry.npm.taobao.org/vue/download/vue-3.0.11.tgz?cache=0&sync_timestamp=1617321643721&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-3.0.11.tgz"
   "version" "3.0.11"

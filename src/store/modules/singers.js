@@ -10,7 +10,7 @@ export default {
     },
     mutations: {
         [GET_SINGERS](state, data){
-            if((data.searchData.cat || data.searchData.initial) && data.searchData.offset <= 0){
+            if(data.searchData.offset <= 0){
                 state.singers = data.result.artists
             }else {
                 state.singers.push(...data.result.artists)

@@ -8,7 +8,7 @@
         <ul :ref="getHotTypeScrollRef" class="cateScroll hotTypeScroll">
           <li class="title">{{ state.hotTypesTitle }}</li>
           <li
-            @click="handleClickHotType(item.key, index)"
+            @click="handleClickHotType(item, index)"
             v-for="(item, index) in state.categoryTypes"
             :key="item.key"
           >
@@ -39,9 +39,11 @@
     </CateScroll>
     <div :ref="getSingerListContainer" class="singersListContainer">
       <van-pull-refresh
-      :head-height="80"
+        :head-height="80"
         success-text="刷新成功"
-       v-model="state.refresh" @refresh="onRefresh">
+        v-model="state.refresh"
+        @refresh="onRefresh"
+      >
         <van-list
           finished-text="没有更多了"
           :loading="state.loading"
@@ -52,7 +54,6 @@
         >
           <van-loading
             class="loading"
-            slot="loading"
             v-show="state.loading && !state.refresh"
             :color="state.themeColor"
             :vertical="true"
@@ -108,7 +109,8 @@ export default {
       themeColor: globalStyle["theme-color"],
       loading: true,
       searchObj: {
-        cat: "",
+        type: "",
+        area: "",
         initial: "",
         offset: 0,
       },
@@ -117,7 +119,7 @@ export default {
       page: 0,
       more: true,
       singerListContainerRef: null,
-      refresh: false
+      refresh: false,
     });
     const getHotTypeScrollRef = (el) => {
       if (el) {
@@ -141,7 +143,8 @@ export default {
         store.commit("singers/" + SET_LOADING, true);
         if (
           !state.more &&
-          val.cat !== oldVal.cat &&
+          val.type !== oldVal.type &&
+          val.area !== oldVal.area &&
           val.initial !== oldVal.initial
         ) {
           return;
@@ -150,8 +153,8 @@ export default {
           type: "singers/" + GET_SINGERS,
           data: val,
         });
-        state.finished = false
-        state.refresh = false
+        state.finished = false;
+        state.refresh = false;
       },
       {
         immediate: true,
@@ -178,46 +181,49 @@ export default {
     /**
      * 点击热分类
      */
-    function handleClickHotType(key, index) {
-      if (state.hotTypeActive === index) {
-        state.searchObj.cat = "";
-        state.hotTypeActive = -1;
-
-        return;
-      }
+    function handleClickHotType(item, index) {
+      state.page = 0;
+      state.searchObj.offset = 0;
       state.singerListContainerRef.scrollTo({
         behavior: "auto",
         top: 0,
       });
-      state.searchObj.cat = key;
+      if (state.hotTypeActive === index) {
+        state.searchObj.type = "";
+        state.searchObj.area = "";
+        state.hotTypeActive = -1;
+        return;
+      }
+
+      state.searchObj.type = item.type;
+      state.searchObj.area = item.area;
       state.hotTypeActive = index;
-      state.page = 0;
-      state.searchObj.offset = 0;
     }
     /**
      * 点击字母分类
      */
     function handleClickAlphaType(key, index) {
+      state.page = 0;
+      state.searchObj.offset = 0;
+      state.singerListContainerRef.scrollTo({
+        behavior: "smooth",
+        top: 0,
+      });
       if (state.alphaTypeActive === index) {
         state.searchObj.initial = "";
         state.alphaTypeActive = -1;
         return;
       }
-      state.singerListContainerRef.scrollTo({
-        behavior: "smooth",
-        top: 0,
-      });
+
       state.searchObj.initial = key;
       state.alphaTypeActive = index;
-      state.page = 0;
-      state.searchObj.offset = 0;
     }
     /**
      * 处理加载的方法
      */
     async function handleLoading() {
       if (!state.more) {
-          state.finished = true;
+        state.finished = true;
         return;
       }
       state.searchObj.offset = state.page++ * 50;
@@ -230,8 +236,8 @@ export default {
       state.page = 0;
       state.searchObj.offset = state.page * 50;
       state.searchObj = {
-        ...state.searchObj
-      }
+        ...state.searchObj,
+      };
     }
     return {
       state,

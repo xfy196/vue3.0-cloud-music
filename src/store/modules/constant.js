@@ -5,3 +5,6 @@ export const SET_LOADING = "set_loading"
 // 歌手
 export const GET_SINGERS = "get_singers"
 export const SET_FINISHED = "set_finished"
+
+// 排行榜
+export const GET_RANK_DETAIL = "get_rank_detail"
