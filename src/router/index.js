@@ -31,9 +31,14 @@ const router = createRouter({
                             name: "rank"
                         }
                     ]
+                },
+                {
+                    path: "/search",
+                    component: () => import("../page/search.vue"),
+                    name: "search"
                 }
-            ]
-        }
+            ],
+        },
     ]
 })
 router.afterEach(() => {

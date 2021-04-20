@@ -3,7 +3,9 @@
     <Top>
       <i class="iconfont menu" @click="handleClickMenu">&#xe65c;</i>
       <span class="title">云音乐</span>
+      <router-link to="/search" tag="a">
       <i class="iconfont search">&#xe62b;</i>
+      </router-link>
     </Top>
     <HomeLayoutContentWrapper>
       <van-tabs :sticky="true" :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">

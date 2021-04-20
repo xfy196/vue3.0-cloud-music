@@ -1,7 +1,7 @@
 <template>
 <van-swipe class="swipeContainer" :indicator-color="state.themeColor" :autoplay="3000">
   <van-swipe-item v-for="(item, index) in banners" :key="index">
-    <img style="height: 100%; width: 100%" v-lazy="item.imageUrl" />
+    <img style="height: 100%; width: 100%" :src="item.imageUrl" />
   </van-swipe-item>
 </van-swipe>
 </template>
