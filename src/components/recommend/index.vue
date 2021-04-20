@@ -18,10 +18,12 @@
         ></van-loading>
       </RecommendWrapper>
     </slot>
+    <!-- <Loading v-if="state.loading"></Loading> -->
   </ScrollCom>
 </template>
 
 <script>
+import Loading from "@/baseUI/loading/index.vue"
 import { RecommendWrapper } from "./style";
 import ScrollCom from "@/packages/scroll/index.vue";
 import Before from "./Before/index.vue";
@@ -38,6 +40,7 @@ export default {
     Before,
     RecommendList,
     ScrollCom,
+    Loading
   },
   setup() {
     const store = useStore();
