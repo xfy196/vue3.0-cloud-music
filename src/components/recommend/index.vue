@@ -9,13 +9,6 @@
           :title="state.title"
           :list="state.list"
         ></RecommendList>
-        <van-loading
-        class="loading"
-          v-show="state.loading"
-          :color="state.themeColor"
-          :vertical="true"
-          type="spinner"
-        ></van-loading>
       </RecommendWrapper>
     </slot>
     <!-- <Loading v-if="state.loading"></Loading> -->

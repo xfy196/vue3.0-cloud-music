@@ -2,6 +2,13 @@
 <ScrollContainer>
     <div id="scrollWrapper" :ref="getScrollRef">
         <slot></slot>
+         <van-loading
+        class="loading"
+          v-show="loading"
+          :color="themeColor"
+          :vertical="true"
+          type="spinner"
+        ></van-loading>
     </div>
 </ScrollContainer>
 </template>
@@ -9,6 +16,8 @@
 <script>
 import {ScrollContainer} from "./style"
 import {reactive, onMounted, onUpdated} from "vue"
+import globalStyle from "@/assets/global-style";
+
 import BScroll from "better-scroll"
 export default {
     name: "Scroll",
@@ -23,7 +32,9 @@ export default {
     setup(props, ctx){
         const state = reactive({
             scrollRef: null,
-            bsScroll: null
+            bsScroll: null,
+            themeColor: globalStyle["theme-color"],
+
         })
         const getScrollRef = el => {
             if(el){

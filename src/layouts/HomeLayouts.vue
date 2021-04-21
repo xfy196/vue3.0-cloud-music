@@ -8,15 +8,11 @@
       </router-link>
     </Top>
     <HomeLayoutContentWrapper>
-      <van-tabs :sticky="true" :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
-        <van-tab name="recommend" title="推荐" to="/recommend">
-          <router-view/>
-        </van-tab>
-        <van-tab name="singers" title="歌手" to="/singers">
-          <router-view/>
-        </van-tab>
-        <van-tab name="rank" title="排行榜" to="/rank">
-          <router-view/>
+      <van-tabs :lazy-render="true" :sticky="true" :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
+        <van-tab :name="item.name" :title="item.title" :to="item.path" v-for="(item, index) in state.tabs" :key="index">
+          <keep-alive exclude="Recommend,Rank" v-if="route.name===item.name">
+            <router-view/>
+          </keep-alive>
         </van-tab>
     </van-tabs>
     </HomeLayoutContentWrapper>
@@ -39,12 +35,29 @@ export default {
   },
   setup(){
     const state = reactive({
+      tabs: [
+        {
+          name: "recommend",
+          title: "推荐",
+          path: "/recommend"
+        },
+        {
+          name: "singers",
+          title: "歌手",
+          path: "/singers"
+        },
+        {
+          name: "rank",
+          title: "排行榜",
+          path: "/rank"
+        },
+      ],
       count: 0,
         tabActive: "recommend",
         themeColor: globalStyle["theme-color"]
       })
-      state.tabActive = useRoute().name
-
+      const route = useRoute()
+      state.tabActive = route.name
       // 点击左侧菜单
       function handleClickMenu(){
         Toast({
@@ -55,6 +68,7 @@ export default {
       return {
         state,
         handleClickMenu,
+        route
       }
   },
 }

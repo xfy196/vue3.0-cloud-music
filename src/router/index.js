@@ -23,7 +23,7 @@ const router = createRouter({
                         {
                             path: "/singers",
                             component: () => import("../page/singers.vue"),
-                            name: "singers"
+                            name: "singers",
                         },
                         {
                             path: "/rank",

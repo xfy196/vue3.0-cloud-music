@@ -8,14 +8,52 @@ export const SearchContainerStyled = styled.div`
     bottom: 0;
     height: 100%;
     width: 100%;
-    .header{
+    background: #fcfcfd;
+    .searchContainer {
+        height: 100%;
         display: flex;
-        align-items: center;
-        background: ${globalStyle["theme-color"]};
-        .searchInput{
+        flex-direction: column;
+        .header{
+            display: flex;
+            align-items: center;
+            background: ${globalStyle["theme-color"]};
+            .searchInput{
+                flex: 1;
+                .van-search__action{
+                    color: #fff;
+                }
+            }
+        }
+        .content {
             flex: 1;
-            .van-search__action{
-                color: #fff;
+            .hotContainer{
+                margin: 0 0.2rem 0.2rem 0.2rem;
+                .headTitle {
+                    font-size: 0.14rem;
+                    color: #666;
+                    padding-top: 0.35rem;
+                    font-weight: normal;
+                    margin-bottom: 0.1rem;
+                }
+                .hotList{
+                    display: flex;
+                    flex-wrap: wrap;
+                    .hotItem {
+                      display: inline-block;
+                      padding: 0.1rem 0.15rem;
+                      margin: 0 0.1rem 0.06rem 0;  
+                      background: #fff;
+                      font-size: 0.14rem;
+                      color: #2E3030;
+                      border-color: #d3d4da;
+                      &::before{
+                          border-radius: 0.8rem;
+                      }
+                    }
+                }
+            }
+            .searchListWrapper{
+                position: relative;
             }
         }
     }

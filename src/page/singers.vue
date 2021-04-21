@@ -8,7 +8,7 @@ export default {
     name: "Singers",
     components: {
       SingersCom
-    }
+    },
 }
 </script>
 
