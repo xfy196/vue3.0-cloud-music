@@ -18,11 +18,11 @@
                 <ScrollCom :pullUpLoad="true" @pullUpLoad="handlePullUpLoad" v-else @initRequest="handelScrollCallback" :loading="state.loading">
                     <slot>
                         <div class="searchListWrapper">
-                            <div class="suggestBox">
+                            <div class="suggestBox" v-if="suggest.artists">
                                 <h3 class="title">
                                     相关歌手
                                 </h3>
-                                <div class="border-bottom artistWrapper" v-if="suggest.artists">
+                                <div class="border-bottom artistWrapper">
                                     <van-image width="0.5rem" height="0.5rem" :src="suggest.artists[0].picUrl"/>
                                     <span class="name">歌手：{{suggest.artists[0].name}}</span>
                                 </div>
