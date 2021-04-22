@@ -27,6 +27,10 @@ export default {
     props: {
         loading: {
             type: Boolean
+        },
+        pullUpLoad: {
+            type: Boolean,
+            default: false
         }
     },
     setup(props, ctx){
@@ -46,7 +50,8 @@ export default {
                 scrollY: true,
                 bounce: true,
                 probeType: 3,
-                pullDownRefresh: true
+                pullDownRefresh: true,
+                pullUpLoad: props.pullUpLoad
             })
             state.bsScroll.on("pullingDown", async () => {
                 // 调用外面的刷新方法
@@ -54,6 +59,12 @@ export default {
                     if(!val){
                         state.bsScroll.finishPullDown()
                     }
+                })
+            })
+            props.pullUpLoad && state.bsScroll.on("pullingUp", async() => {
+                ctx.emit("pullUpLoad", () => {
+                    state.bsScroll.refresh()
+                    state.bsScroll.finishPullUp()
                 })
             })
         })

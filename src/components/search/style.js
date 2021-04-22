@@ -26,6 +26,7 @@ export const SearchContainerStyled = styled.div`
         }
         .content {
             flex: 1;
+            height: calc(100% - .54rem);
             .hotContainer{
                 margin: 0 0.2rem 0.2rem 0.2rem;
                 .headTitle {
@@ -54,6 +55,52 @@ export const SearchContainerStyled = styled.div`
             }
             .searchListWrapper{
                 position: relative;
+                .suggestBox {
+                    .title{
+                        margin: .1rem 0 .1rem .1rem;
+                        color: #666;
+                        font-size: .12rem;
+                    }
+                    .artistWrapper{
+                        display: flex;
+                        align-items: center;
+                        margin: 0 .05rem 0;
+                        padding: 0.05rem 0;
+                        .name{
+                            font-weight: 500;
+                            font-size: .14rem;
+                            color: #2E3030;
+                            margin-left: 0.2rem;
+                        }
+                    }
+                }
+                .songList{
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    padding-left: 0.2rem;
+                    .songItem {
+                        display: flex;
+                        flex-direction: column;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        padding: 0.05rem 0;
+                        span {
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                        .songName{
+                            font-size: .14rem;
+                            color: #2E3030;
+                        }
+                        .songAuthor{
+                            font-size: 0.12rem;
+                            color: #bba8a8;
+                        }
+                    }
+                }
             }
         }
     }

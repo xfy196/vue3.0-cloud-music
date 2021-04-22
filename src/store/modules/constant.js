@@ -9,3 +9,8 @@ export const SET_FINISHED = "set_finished"
 export const GET_RANK_DETAIL = "get_rank_detail"
 // 搜索
 export const GET_HOTS = "get_hots"
+export const GET_SEARCH_LIST = 'get_search_list'
+export const SET_SEARCHRESULT = "set_search_result"
+export const SET_PAGE = "set_page"
+export const GET_SUGGEST = "set_suggest"
+export const SET_SUGGEST = "set_suggest"
