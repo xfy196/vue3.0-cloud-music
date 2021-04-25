@@ -14,3 +14,7 @@ export const SET_SEARCHRESULT = "set_search_result"
 export const SET_PAGE = "set_page"
 export const GET_SUGGEST = "set_suggest"
 export const SET_SUGGEST = "set_suggest"
+// alDetail
+export const GET_DETAIL = "get_detail"
+export const SET_DETAIL = "set_detail"
+export const SET_SONGS = "set_songs"

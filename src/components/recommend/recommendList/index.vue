@@ -3,7 +3,7 @@
     <TitleCom :title="title"></TitleCom>
     <ListStyled>
       <van-row>
-        <van-col v-for="item in list" :key="item.id" span="8">
+        <van-col @click="handleRecommednItemClick(item)" v-for="item in list" :key="item.id" span="8">
           <div class="listItem">
             <div class="img_wrapper">
               <div class="decorate"></div>
@@ -28,6 +28,7 @@
 import TitleCom from "@/baseUI/title/index.vue";
 import { RecommendListStyled, ListStyled } from "./style";
 import { reactive, computed} from "vue";
+import {useRouter} from "vue-router"
 export default {
   components: {
     TitleCom,
@@ -43,6 +44,7 @@ export default {
   name: "RecommendList",
   setup() {
     const state = reactive({});
+    const router = useRouter()
     /**
      * 重新计算payCount的数据
      */
@@ -51,9 +53,15 @@ export default {
         return Math.ceil(palyCount / 10000) + "万";
       };
     });
+    function handleRecommednItemClick(item){
+      router.push({
+        path: `/recommend/${item.id}`
+      })
+    }
     return {
       ...state,
       getPlayCount,
+      handleRecommednItemClick
     };
   },
 };

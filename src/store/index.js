@@ -3,10 +3,10 @@ import recommend from "./modules/recommend"
 import singers from "./modules/singers"
 import rank from "./modules/rank"
 import search from "./modules/search"
+import alDetail from "./modules/alDetail"
 const store = createStore({
     state(){
         return{
-            num: 1,
         }
     },
     mutations: {
@@ -19,7 +19,8 @@ const store = createStore({
         recommend,
         singers,
         rank,
-        search
+        search,
+        alDetail
     }
 })
 

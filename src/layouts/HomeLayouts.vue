@@ -16,6 +16,7 @@
         </van-tab>
     </van-tabs>
     </HomeLayoutContentWrapper>
+    <!-- <MiniPlayer></MiniPlayer> -->
   </HomeLayoutsWrapper>
 </template>
 
@@ -26,12 +27,14 @@ import {reactive} from "vue"
 import {useRoute} from "vue-router"
 import {Toast} from "vant"
 import globalStyle from "@/assets/global-style"
+import MiniPlayer from "@/components/player/mini-player/index.vue"
 export default {
   components: {
     "HomeLayoutsWrapper": HomeLayoutsWrapper,
     "Top": Top,
     "HomeLayoutContentWrapper": HomeLayoutContentWrapper,
-    "Recommend": Recommend
+    "Recommend": Recommend,
+    "MiniPlayer": MiniPlayer
   },
   setup(){
     const state = reactive({

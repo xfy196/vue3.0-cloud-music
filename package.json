@@ -26,24 +26,5 @@
     "postcss": "^8.2.10",
     "postcss-pxtorem": "^6.0.0",
     "vite": "^2.1.5"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {
-        "overrideBrowserslist": [
-          "Android 4.1",
-          "iOS 7.1",
-          "Chrome > 31",
-          "ff > 31",
-          "ie >= 8"
-        ]
-      },
-      "postcss-pxtorem": {
-        "rootValue": 100,
-        "propList": [
-          "*"
-        ]
-      }
-    }
   }
 }

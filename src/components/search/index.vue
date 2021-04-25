@@ -1,7 +1,7 @@
 <template>
     <SearchContainerStyled>
-        <transition @enter="handleAnimateEnter" appear="animate__animated animate__fadeInRight" enter-active-class="animate__animated animate__fadeInRight" duration="300">
-            <div class="searchContainer">
+        <transition  @enter="handleAnimateEnter" leave-active-class="animate__fadeOutRight animate__animated" appear="animate__animated animate__fadeInRight" enter-active-class="animate__animated animate__fadeInRight" duration="300">
+            <div v-show="state.show" class="searchContainer">
                 <div class="header">
                     <van-icon color="#fff" @click="handleBack" name="arrow-left" />
                     <van-search @clear="handleClear" @search="handleSearch" :background="state.themeColor" autofocus shape="round" class="searchInput" v-model="state.keywords" placeholder="搜索歌曲、歌手、专辑" />
@@ -101,6 +101,7 @@ export default {
          * 返回
          */
         function handleBack(){
+            state.show = false
             router.go(-1)
         }
         function handelScrollCallback(fn){
