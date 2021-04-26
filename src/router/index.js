@@ -41,6 +41,11 @@ const router = createRouter({
                     path: "/recommend/:id",
                     name: "recommendList",
                     component: () => import("../page/alDetail.vue")
+                },
+                {
+                    path: "/rank/:id",
+                    name: "rankList",
+                    component: () => import("../page/alDetail.vue")
                 }
             ],
         },

@@ -3,7 +3,7 @@
     <div class="official">
       <TitleCom :title="'官方榜'"></TitleCom>
       <ul class="officialList">
-        <li class="officialItem border-bottom" v-for="item in detail.list.slice(0, 4)" :key="item.id">
+        <li class="officialItem border-bottom" @click="handleGoDetail(item)" v-for="item in detail.list.slice(0, 4)" :key="item.id">
           <div class="img_wrapper">
           <van-image
             width="1rem"
@@ -24,7 +24,7 @@
     <div class="global">
       <TitleCom :title="'全球榜'"></TitleCom>
       <ul class="globalList">
-        <li class="globalItem border-bottom" v-for="item in detail.list.slice(4)" :key="item.id">
+        <li class="globalItem border-bottom" @click="handleGoDetail(item)" v-for="item in detail.list.slice(4)" :key="item.id">
             <div class="img_wrapper">
           <van-image
             width="1.2rem"
@@ -56,6 +56,7 @@ import TitleCom from "@/baseUI/title/index.vue";
 import { RankContainerStyled } from "./style";
 import globalStyle from "@/assets/global-style";
 import {GET_RANK_DETAIL} from "@/store/modules/constant"
+import { useRouter } from 'vue-router';
 export default {
   components: {
     TitleCom,
@@ -65,6 +66,7 @@ export default {
     const state = reactive({
       themeColor: globalStyle["theme-color"]
     });
+    const router = useRouter()
     const store = useStore()
     const detail = computed(() => store.state.rank.detail)
     const loading = computed(() => store.state.rank.loading)
@@ -77,12 +79,21 @@ export default {
           type: "rank/" + GET_RANK_DETAIL
         })
       }
+      /**
+       * 点击跳转详情页面
+       */
+      function handleGoDetail(item){
+        router.push({
+          path: `/rank/${item.id}`,
+        })
+      }
       onMounted(() => {
       })
     return {
       ...state,
       detail,
-      loading
+      loading,
+      handleGoDetail
     };
   },
 };
