@@ -54,19 +54,23 @@
           </div>
           <Menu>
             <div>
-              <i className="iconfont">&#xe6ad;</i>
+              <!-- <i class="iconfont">&#xe6ad;</i> -->
+              <van-icon size=".18rem" name="chat-o" />
               评论
             </div>
             <div>
-              <i className="iconfont">&#xe86f;</i>
+              <van-icon size=".18rem" name="star-o" />
+              <!-- <i class="iconfont">&#xe86f;</i> -->
               点赞
             </div>
             <div>
-              <i className="iconfont">&#xe62d;</i>
+              <!-- <i class="iconfont">&#xe62d;</i> -->
+              <van-icon size=".18rem" name="add-o" />
               收藏
             </div>
             <div>
-              <i className="iconfont">&#xe606;</i>
+              <!-- <i class="iconfont">&#xe606;</i> -->
+              <van-icon size=".18rem" name="more-o" />
               更多
             </div>
           </Menu>

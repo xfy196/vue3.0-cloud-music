@@ -111,6 +111,6 @@ export const Menu = styled.div`
         font-size: .12rem;
         color: #3b1f1f;
         color: #f1f1f1;
-        z-index: 1000;
+        z-index: 1;
     }
 `

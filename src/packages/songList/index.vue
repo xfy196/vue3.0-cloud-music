@@ -8,8 +8,7 @@
           <span className="sum"> (共{{ songs.length }}首)</span>
         </span>
       </div>
-      <van-button :color="themeColor">
-        <van-icon name="plus" />
+      <van-button icon="plus" :color="themeColor">
         <span>收藏({{ (subscribedCount / 1000).toFixed(2) }}万)</span>
       </van-button>
     </div>
