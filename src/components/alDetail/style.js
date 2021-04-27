@@ -9,7 +9,8 @@ export const SongListStyled = styled.div`
  width: 100%;
  height: 100%;
  overflow-y: auto;
- /* overflow-x: hidden; */
+ padding-bottom: ${(props) => props.playSwitch ? '0.6rem' : 0};
+
  .detailContainer{
      width: 100%;
      height: 100%;

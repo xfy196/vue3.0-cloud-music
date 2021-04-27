@@ -4,13 +4,18 @@ import singers from "./modules/singers"
 import rank from "./modules/rank"
 import search from "./modules/search"
 import alDetail from "./modules/alDetail"
+import play from "./modules/play"
+import {SET_SHOW_PLAYER} from "./modules/constant"
 const store = createStore({
     state(){
         return{
+            playSwitch: false,
         }
     },
     mutations: {
-
+        [SET_SHOW_PLAYER](state, payload){
+            state.playSwitch = payload.data
+        }
     },
     actions: {
 
@@ -20,7 +25,8 @@ const store = createStore({
         singers,
         rank,
         search,
-        alDetail
+        alDetail,
+        play
     }
 })
 

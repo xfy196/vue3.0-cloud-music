@@ -52,3 +52,8 @@ flex-direction: column;
 }
 
 `
+export const BlankStyle = styled.div`
+width: 100%;
+height: 100%;
+padding-bottom: ${(props) => props.playSwitch ? '0.6rem' : 0};
+`

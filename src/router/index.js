@@ -15,6 +15,9 @@ const router = createRouter({
                             path: "/recommend",
                             component: () => import("../page/recommend.vue"),
                             name: "recommend",
+                            children: [
+                                
+                            ]
                         },
                         {
                             path: "/",

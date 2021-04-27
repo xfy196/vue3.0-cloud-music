@@ -1,5 +1,5 @@
 <template>
-  <SongListStyled @scroll="handleScroll" :coverImgUrl="coverImgUrl">
+  <SongListStyled :playSwitch="playSwitch" @scroll="handleScroll" :coverImgUrl="coverImgUrl">
     <transition
       appear="animate__animated animate__fadeInRight"
       leave-active-class="animate__fadeOutRight animate__animated"
@@ -72,7 +72,7 @@
           </Menu>
         </div>
         <!-- 歌曲列表 -->
-        <SongList :songs="songs.songs"></SongList>
+        <SongList :subscribedCount="detail.playlist ? detail.playlist.subscribedCount : 0" :songs="songs.songs"></SongList>
       </div>
     </transition>
     <Loading v-show="loading"></Loading>
@@ -109,6 +109,7 @@ export default {
 
     const detail = computed(() => store.getters["alDetail/detail"]);
     const songs = computed(() => store.getters["alDetail/songs"]);
+    const playSwitch = computed(() => store.state.playSwitch)
     const playCounts = computed(() => {
       if (detail.value.playlist) {
         return Math.ceil(detail.value.playlist.playCount / 10000) + "万";
@@ -164,7 +165,8 @@ export default {
       playCounts,
       songs,
       handleScroll,
-      headRef
+      headRef,
+      playSwitch
     };
   },
 };

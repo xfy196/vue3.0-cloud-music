@@ -13,4 +13,5 @@ import "./assets/css/border.css"
 import fastclick from "fastclick"
 import "animate.css"
 fastclick.FastClick.attach(document.body);
-const app = createApp(App).use(router).use(store).use(vant).use(Lazyload).mount('#app')
+const app = createApp(App)
+app.use(router).use(store).use(vant).use(Lazyload).mount('#app')

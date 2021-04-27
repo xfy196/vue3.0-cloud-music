@@ -18,3 +18,8 @@ export const SET_SUGGEST = "set_suggest"
 export const GET_DETAIL = "get_detail"
 export const SET_DETAIL = "set_detail"
 export const SET_SONGS = "set_songs"
+
+export const SET_AUDIO_REF = "set_audio_ref"
+export const SET_AUDIO_OBJ = "set_audio_obj"
+export const SET_SHOW_PLAYER = "set_show_player"
+export const SET_PLAYER_SONGS = "set_player_songs"

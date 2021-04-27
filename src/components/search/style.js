@@ -9,6 +9,7 @@ export const SearchContainerStyled = styled.div`
     height: 100%;
     width: 100%;
     background: #fcfcfd;
+    padding-bottom: ${(props) => props.playSwitch ? '0.6rem' : 0};
     .searchContainer {
         height: 100%;
         display: flex;

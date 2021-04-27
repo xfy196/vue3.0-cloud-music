@@ -1,5 +1,5 @@
 <template>
-    <SearchContainerStyled>
+    <SearchContainerStyled :playSwitch="playSwitch">
         <transition  @enter="handleAnimateEnter" leave-active-class="animate__fadeOutRight animate__animated" appear="animate__animated animate__fadeInRight" enter-active-class="animate__animated animate__fadeInRight" duration="300">
             <div v-show="state.show" class="searchContainer">
                 <div class="header">
@@ -91,6 +91,7 @@ export default {
             let author = item.artists[0].name + "-" + item.album.name
             return author;
         })
+        const playSwitch = computed(() => store.state.playSwitch)
         /**
          * 动画进场
          */
@@ -169,7 +170,8 @@ export default {
             handleClear,
             handlePullUpLoad,
             songAuthor,
-            suggest
+            suggest,
+            playSwitch
         }
     }
 }
