@@ -68,12 +68,19 @@ export default {
                 })
             })
         })
+        /**
+         * 滚动到某一个位置
+         */
+        function scrollTo(x=0, y=0){
+            state.bsScroll.scrollTo(x, y)
+        }
         onUpdated(() => {
             state.bsScroll.refresh()
         })
         return {
             getScrollRef,
-            ...state
+            ...state,
+            scrollTo
         }
     }
 }

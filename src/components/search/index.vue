@@ -15,9 +15,9 @@
                     </ul>
                 </div>
                 <!-- 搜索的歌曲列表 -->
-                <ScrollCom :pullUpLoad="true" @pullUpLoad="handlePullUpLoad" v-else @initRequest="handelScrollCallback" :loading="state.loading">
+                <ScrollCom ref="scrollRef" :pullUpLoad="true" @pullUpLoad="handlePullUpLoad" v-else @initRequest="handelScrollCallback" :loading="state.loading">
                     <slot>
-                        <div class="searchListWrapper">
+                        <div v-show="!state.loading" class="searchListWrapper">
                             <div class="suggestBox" v-if="suggest.artists">
                                 <h3 class="title">
                                     相关歌手
@@ -44,11 +44,11 @@
 
 <script>
 import {SearchContainerStyled} from "./style"
-import {reactive, onMounted, onBeforeMount, computed, onUnmounted} from "vue"
+import {reactive, onMounted, onBeforeMount, computed, onUnmounted, ref} from "vue"
 import globalStyle from "@/assets/global-style"
 import {useRouter} from "vue-router"
 import {useStore} from "vuex"
-import {GET_HOTS, GET_SEARCH_LIST, SET_SEARCHRESULT, GET_SUGGEST, SET_SUGGEST} from "@/store/modules/constant"
+import {GET_HOTS, GET_SEARCH_LIST, SET_SEARCHRESULT, GET_SUGGEST, SET_SUGGEST, SET_PAGE} from "@/store/modules/constant"
 import Loading from "@/baseUI/loading/index.vue"
 import ScrollCom from "@/packages/scroll/index.vue"
 export default {
@@ -67,6 +67,7 @@ export default {
             listShow: false,
             loading: true,
         })
+        const scrollRef = ref(null)
         onBeforeMount(async () => {
             await store.dispatch({
                 type: 'search/' + GET_HOTS,
@@ -86,7 +87,6 @@ export default {
         const searchResult = computed(() => store.getters["search/searchResult"])
         const page = computed(() => store.getters["search/page"])
         const suggest = computed(() => store.getters["search/suggest"])
-
         const songAuthor = computed(() => (item) => {
             let author = item.artists[0].name + "-" + item.album.name
             return author;
@@ -114,6 +114,7 @@ export default {
         async function handlePullUpLoad(fn){
             if(searchResult.value.hasMore){
                 state.loading = true
+                store.commit("search/"+SET_PAGE, Number(page.value) + 1)
                 await store.dispatch({
                      type: "search/" + GET_SEARCH_LIST,
                      data: {
@@ -132,6 +133,7 @@ export default {
            state.keywords = value;
            state.listShow = true
            state.loading = true;
+            store.commit("search/"+SET_PAGE, 0)
            await store.dispatch({
                 type: "search/" + GET_SUGGEST,
                 data: {
@@ -145,6 +147,7 @@ export default {
                }
            })
            state.loading = false
+           handleScrollTop()
         }
         
         /**
@@ -159,6 +162,12 @@ export default {
            })
            store.commit("search/" + SET_SUGGEST, {})
         }
+        /**
+         * 处理函数跳转到top为0的位置
+         */
+        function handleScrollTop(){
+            scrollRef.value.scrollTo(0, 0)
+        }
         return {
             state,
             handleAnimateEnter,
@@ -171,7 +180,8 @@ export default {
             handlePullUpLoad,
             songAuthor,
             suggest,
-            playSwitch
+            playSwitch,
+            scrollRef,
         }
     }
 }

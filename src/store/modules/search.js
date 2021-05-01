@@ -21,10 +21,10 @@ export default {
         [GET_SEARCH_LIST](state, payload){
             state.searchResult.hasMore = payload.hasMore
             state.searchResult.songCount = payload.songCount
-            if(state.searchResult.songs.length > 0){
+            if(state.searchResult.songs.length > 0 && state.page > 0){
                 state.searchResult.songs.push(...payload.songs)
             }else {
-                state.searchResult.songs = payload.songs
+                state.searchResult.songs = [...payload.songs]
             }
         },
         [SET_SEARCHRESULT](state, payload){
@@ -60,7 +60,7 @@ export default {
             })
             if(result.code == 200){
                 commit(GET_SEARCH_LIST, result.result)
-                commit(SET_PAGE, ++state.page)
+                // commit(SET_PAGE, ++state.page)
             }else {
                 commit(GET_SEARCH_LIST, {
                     hasMore: false,
