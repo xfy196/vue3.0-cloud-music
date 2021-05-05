@@ -1,7 +1,7 @@
 import styled from "vue3-styled-components"
 export const SingerContainer = styled.div`
     position: fixed;
-    background-color: #fff;
+    background-color: #f2f3f4;
     top: 0;
     left: 0;
     bottom: 0;
@@ -21,19 +21,24 @@ export const SingerContainer = styled.div`
             font-size: 0.16rem;
             font-weight: 700;
             margin: 0;
+            margin-left: 0.05rem;
         }
     }
-    .songsWrapper{
+    .songsContainer{
+        overflow: auto;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #fff;
-        width: 100%;
-        border-radius: 0.1rem;
         z-index: 50;
-        overflow: auto;
+        width: 100%;
+        .songsWrapper{
+            background-color: #fff;
+            position: absolute;
+            width: 100%;
+            border-radius: 0.1rem;
+        }
     }
 `
 

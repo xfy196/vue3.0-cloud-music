@@ -9,11 +9,11 @@
       <div v-show="state.show">
         <header ref="headerRef" class="headerTop">
           <van-icon size="0.16rem" @click="router.go(-1)" name="arrow-left" />
-          <h2 class="singerName">歌手名字</h2>
+          <h2 class="singerName">{{songs.artist.name}}</h2>
         </header>
 
         <ImgWrapper
-          background="https://p2.music.126.net/dwbXimgQn1YnJzwSlPDk-A==/109951165911950321.jpg"
+          :background="songs.artist.picUrl"
         >
           <div ref="imgWrapperRef" class="filter"></div>
         </ImgWrapper>
@@ -22,8 +22,10 @@
             >收藏</van-button
           >
         </CollectionButton>
-        <div @scroll="handleSongsScroll" ref="songsRef" class="songsWrapper">
-          <SongList :isCollect="false" :songs="songs"></SongList>
+        <div id="songsContainer" @scroll="handleSongsScroll" class="songsContainer">
+            <div  ref="songsRef" class="songsWrapper">
+            <SongList :isCollect="false" :songs="songs.hotSongs"></SongList>
+            </div>
         </div>
       </div>
     </transition>
@@ -62,7 +64,6 @@ export default {
     const songsRef = ref(null);
     const headerRef = ref(null)
     const imgWrapperRef = ref(null);
-    let OFFSET = 5;
     watch(loading, (state, preState) => {
       if (!state) {
         nextTick(() => {
@@ -87,19 +88,13 @@ export default {
      */
     function handleSongsScroll(e){
         let scrollTop = e.target.scrollTop
-        if(scrollTop >= 44 ){
-            let h = headerRef.value.offsetHeight;
-            if(songs.value.offsetTop === h){
+            if(imgWrapperRef.value.offsetHeight - scrollTop <= headerRef.value.offsetHeight){
+                document.getElementById("songsContainer").style.top = headerRef.value.offsetHeight + "px"
                 return
+            }else if(scrollTop <= 0){
+                document.getElementById("songsContainer").style.top = 0 + "px"
+
             }
-            songsRef.value.style.top = `${h / 100}rem`;
-        }else if(scrollTop <= 0){
-            let h = imgWrapperRef.value.offsetHeight;
-            if(songsRef.value.offsetTop === h){
-                return
-            }
-            songsRef.value.style.top = `${h / 100}rem`;
-        }
     }
     return {
       router,

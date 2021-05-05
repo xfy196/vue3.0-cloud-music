@@ -3,7 +3,11 @@ import {GET_SINGER_SONGS, SET_SINGER_SONGS} from "./constant"
 export default {
     state: () => {
         return {
-            songs: []
+            songs: {
+                artist: {},
+                more: true,
+                hotSongs: []
+            }
         }
     },
     mutations: {
@@ -16,10 +20,11 @@ export default {
             let id = payload.id
             // 请求数据
             let result = await request({
-                url: "/api/artist/top/song?id=" + id
+                url: "/api/artists?id=" + id
             })
             if(result.code == 200){
-                commit(SET_SINGER_SONGS, result.songs)
+                delete result.code
+                commit(SET_SINGER_SONGS, result)
             }
         }
     },
