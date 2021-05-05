@@ -14,7 +14,6 @@ import { computed, reactive, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
 import {Toast} from "vant"
-import func from 'vue-editor-bridge';
 export default {
   components: {
     MiniPlayer,
