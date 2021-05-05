@@ -93,8 +93,11 @@ export default {
                 return
             }
             songsRef.value.style.top = `${h / 100}rem`;
-        }else if(scrollTop == 0){
+        }else if(scrollTop <= 0){
             let h = imgWrapperRef.value.offsetHeight;
+            if(songsRef.value.style.top - OFFSET === h){
+                return
+            }
             songsRef.value.style.top = `${(h - OFFSET) / 100}rem`;
         }
     }
