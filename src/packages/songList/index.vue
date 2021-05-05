@@ -8,7 +8,7 @@
           <span className="sum"> (共{{ songs.length }}首)</span>
         </span>
       </div>
-      <van-button icon="plus" :color="themeColor">
+      <van-button v-if="isCollect" icon="plus" :color="themeColor">
         <span>收藏({{ (subscribedCount / 1000).toFixed(2) }}万)</span>
       </van-button>
     </div>
@@ -50,6 +50,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    isCollect: {
+      type: Boolean,
+      default: () => true
+    },
     subscribedCount: {
       type: Number,
       default: () => 0,
@@ -59,6 +63,7 @@ export default {
   setup(props) {
     const themeColor = ref(globalStyle["theme-color"]);
     const store = useStore();
+    const isCollect = ref(props.isCollect)
     const al = computed(() => (item) => {
       return item.ar[0].name + "-" + item.al.name;
     });
@@ -117,6 +122,7 @@ export default {
       handleClickSongItem,
       audioObj,
       handlePlayAll,
+      isCollect
     };
   },
 };

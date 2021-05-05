@@ -5,6 +5,7 @@ import rank from "./modules/rank"
 import search from "./modules/search"
 import alDetail from "./modules/alDetail"
 import play from "./modules/play"
+import singer from "./modules/singer"
 import {SET_SHOW_PLAYER} from "./modules/constant"
 const store = createStore({
     state(){
@@ -26,7 +27,8 @@ const store = createStore({
         rank,
         search,
         alDetail,
-        play
+        play,
+        singer
     }
 })
 

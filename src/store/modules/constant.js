@@ -23,3 +23,7 @@ export const SET_AUDIO_REF = "set_audio_ref"
 export const SET_AUDIO_OBJ = "set_audio_obj"
 export const SET_SHOW_PLAYER = "set_show_player"
 export const SET_PLAYER_SONGS = "set_player_songs"
+
+// singer
+export const GET_SINGER_SONGS = "get_singer_songs"
+export const SET_SINGER_SONGS = 'set_singer_songs'

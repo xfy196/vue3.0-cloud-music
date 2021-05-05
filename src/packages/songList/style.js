@@ -5,6 +5,9 @@ flex: 1;
 background: #fff;
 display: flex;
 flex-direction: column;
+border-top-left-radius: 0.1rem;
+border-top-right-radius: 0.1rem;
+overflow: hidden;
 .header{
     display: flex;
     box-sizing: border-box;
@@ -15,6 +18,8 @@ flex-direction: column;
     .play_all{
         display: flex;
         align-items: center;
+        height: 0.44rem;
+        line-height: 0.44rem;
         .play{
             font-size: 0.24rem;
             margin-right: .1rem;

@@ -60,6 +60,7 @@
             type="spinner"
           ></van-loading>
           <div
+            @click="handleSongeClick(item)"
             class="singerItem border-bottom"
             v-for="item in state.singers"
             :key="item.id"
@@ -86,6 +87,7 @@ import { SingersContainer } from "./style";
 import { categoryTypes, alphaTypes } from "@/config/index";
 import { reactive, onMounted, nextTick, watch, computed } from "vue";
 import { useStore } from "vuex";
+import {useRouter} from "vue-router"
 import globalStyle from "@/assets/global-style";
 import { GET_SINGERS, SET_LOADING } from "@/store/modules/constant";
 export default {
@@ -95,6 +97,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter()
     const state = reactive({
       hotTypesTitle: "分类(默认热门):",
       alphaTypesTitle: "首字母:",
@@ -239,6 +242,14 @@ export default {
         ...state.searchObj,
       };
     }
+    /**
+     * 点击歌手
+     */
+    function handleSongeClick(item){
+      router.push({
+        path: `/singer/${item.id}`
+      })
+    }
     return {
       state,
       getHotTypeScrollRef,
@@ -248,6 +259,8 @@ export default {
       handleLoading,
       getSingerListContainer,
       onRefresh,
+      handleSongeClick,
+      router
     };
   },
 };

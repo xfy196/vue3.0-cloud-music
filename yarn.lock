@@ -248,6 +248,11 @@
   "resolved" "https://registry.npm.taobao.org/animate.css/download/animate.css-4.1.1.tgz"
   "version" "4.1.1"
 
+"animejs@^3.2.1":
+  "integrity" "sha1-3p/i55L0Snd6f99q4WDiZgSwzdo="
+  "resolved" "https://registry.npm.taobao.org/animejs/download/animejs-3.2.1.tgz"
+  "version" "3.2.1"
+
 "asap@~2.0.3":
   "integrity" "sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY="
   "resolved" "https://registry.npm.taobao.org/asap/download/asap-2.0.6.tgz"
