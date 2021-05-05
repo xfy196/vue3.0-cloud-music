@@ -14,6 +14,7 @@ import { computed, reactive, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
 import {Toast} from "vant"
+import func from 'vue-editor-bridge';
 export default {
   components: {
     MiniPlayer,
@@ -45,13 +46,21 @@ export default {
      */
     function handleAudioError(){
       Toast({
-        message: "歌曲播放错误"
+        message: "歌曲播放错误, 自动切换下一首"
       })
+      changeSong()
+
     }
     /**
      * 处理歌曲播放结束
      */
     function handleEnded() {
+      changeSong()
+    }
+    /**
+     * 切换歌曲
+     */
+    function changeSong(){
       let audioEle = audioObj.value.audioRef
         audioEle.pause()
       // 如果结束就需要切换歌曲
