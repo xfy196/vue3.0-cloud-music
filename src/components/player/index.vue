@@ -13,6 +13,7 @@ import MiniPlayer from "./mini-player/index.vue";
 import { computed, reactive, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
+import {Toast} from "vant"
 export default {
   components: {
     MiniPlayer,
@@ -43,7 +44,9 @@ export default {
      * 歌曲播放错误
      */
     function handleAudioError(){
-      
+      Toast({
+        message: "歌曲播放错误"
+      })
     }
     /**
      * 处理歌曲播放结束
