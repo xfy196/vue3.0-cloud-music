@@ -8,7 +8,7 @@
     >
       <div v-show="state.show">
         <header ref="headerRef" class="headerTop">
-          <van-icon @click="router.go(-1)" name="arrow-left" />
+          <van-icon size="0.16rem" @click="router.go(-1)" name="arrow-left" />
           <h2 class="singerName">歌手名字</h2>
         </header>
 
@@ -67,7 +67,7 @@ export default {
       if (!state) {
         nextTick(() => {
           let h = imgWrapperRef.value.offsetHeight;
-          songsRef.value.style.top = `${(h - OFFSET) / 100}rem`;
+          songsRef.value.style.top = `${h / 100}rem`;
         });
       }
     });
@@ -87,7 +87,7 @@ export default {
      */
     function handleSongsScroll(e){
         let scrollTop = e.target.scrollTop
-        if(scrollTop > 5 ){
+        if(scrollTop >= 44 ){
             let h = headerRef.value.offsetHeight;
             if(songs.value.offsetTop === h){
                 return
@@ -95,10 +95,10 @@ export default {
             songsRef.value.style.top = `${h / 100}rem`;
         }else if(scrollTop <= 0){
             let h = imgWrapperRef.value.offsetHeight;
-            if(songsRef.value.style.top - OFFSET === h){
+            if(songsRef.value.offsetTop === h){
                 return
             }
-            songsRef.value.style.top = `${(h - OFFSET) / 100}rem`;
+            songsRef.value.style.top = `${h / 100}rem`;
         }
     }
     return {
