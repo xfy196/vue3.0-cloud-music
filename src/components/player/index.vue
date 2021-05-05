@@ -71,7 +71,7 @@ export default {
           return false;
         }
       });
-      if (index === songs.value.length || index < 0) {
+      if (index === songs.value.length - 1 || index < 0) {
         index = 0;
       }else {
           index++
