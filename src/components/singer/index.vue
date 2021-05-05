@@ -1,5 +1,5 @@
 <template>
-  <SingerContainer>
+  <SingerContainer :playSwitch="playSwitch">
     <transition
       leave-active-class="animate__fadeOutRight animate__animated"
       appear="animate__animated animate__fadeInRight"
@@ -54,6 +54,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const playSwitch = computed(() => store.state.playSwitch);
     const state = reactive({
       themeColor: globalStyle["theme-color"],
       show: false,
@@ -104,7 +105,8 @@ export default {
       songsRef,
       imgWrapperRef,
       headerRef,
-      handleSongsScroll
+      handleSongsScroll,
+      playSwitch
     };
   },
 };

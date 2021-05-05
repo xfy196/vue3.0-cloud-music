@@ -4,6 +4,7 @@
     @ended="handleEnded"
     @timeupdate="handelTimeUpdate"
     ref="audioRef"
+    @error="handleAudioError"
   ></audio>
 </template>
 
@@ -37,6 +38,12 @@ export default {
     function handelTimeUpdate(e) {
       state.currentTime = e.target.currentTime;
       let id = audioObj.value.id;
+    }
+    /**
+     * 歌曲播放错误
+     */
+    function handleAudioError(){
+      
     }
     /**
      * 处理歌曲播放结束
@@ -78,6 +85,7 @@ export default {
       handelTimeUpdate,
       percent,
       handleEnded,
+      handleAudioError
     };
   },
 };

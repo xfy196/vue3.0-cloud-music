@@ -6,6 +6,7 @@ export const SingerContainer = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
+    padding-bottom: ${(props) => props.playSwitch ? '0.6rem' : 0};
     .headerTop {
         display: flex;
         align-items: center;
@@ -33,6 +34,7 @@ export const SingerContainer = styled.div`
         bottom: 0;
         z-index: 50;
         width: 100%;
+        margin-bottom: ${(props) =>  props.playSwitch ? '0.6rem' : '0'};
         .songsWrapper{
             background-color: #fff;
             position: absolute;
