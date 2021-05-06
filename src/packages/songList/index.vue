@@ -1,5 +1,5 @@
 <template>
-  <SongListContainer>
+  <SongListContainer id="songListContainer">
     <div class="header border-bottom">
       <div @click="handlePlayAll" className="play_all">
         <van-icon name="play-circle-o play" />
@@ -16,7 +16,7 @@
     <ul class="songList">
       <li
         class="songItem"
-        @click="handleClickSongItem(item)"
+        @click="handleClickSongItem($event, item)"
         v-for="(item, index) in songs"
         :key="item.id"
       >
@@ -33,7 +33,7 @@
 <script>
 import { SongListContainer } from "./style";
 import globalStyle from "@/assets/global-style";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore} from "vuex";
 import {
   SET_AUDIO_OBJ,
@@ -71,6 +71,8 @@ export default {
       return store.getters["play/audioObj"];
     });
 
+  onMounted(() => {
+  })
     /**
      * 播放全部
      */
@@ -81,17 +83,25 @@ export default {
       });
       // 如果存在提示已有歌曲在播放 不存在直接切换为当前地一首歌曲
       if (bool) {
+        audioObj.value.audioRef.play()
+        store.commit({
+            type: "play/" + SET_AUDIO_OBJ,
+            data: {
+                playStatus: true
+            }
+        })
         Toast({
           message: "歌曲正在播放中",
         });
       } else {
-        handleClickSongItem(props.songs[0]);
+        handleClickSongItem(null,props.songs[0]);
       }
     }
     /**
      * 点击歌曲
      */
-    function handleClickSongItem(item) {
+    function handleClickSongItem(e,item) {
+
       let audioEle = audioObj.value.audioRef;
       if (audioObj.value.id === item.id) {
         return;
@@ -122,7 +132,6 @@ export default {
       handleClickSongItem,
       audioObj,
       handlePlayAll,
-      isCollect
     };
   },
 };

@@ -16,13 +16,21 @@
         </van-tab>
     </van-tabs>
     </HomeLayoutContentWrapper>
+    <van-action-sheet
+      v-model:show="themeColorShow"
+      :actions="actions"
+      cancel-text="取消"
+      title="换肤功能"
+      close-on-click-action
+      @select="handleThemeSelect"
+    />
   </HomeLayoutsWrapper>
 </template>
 
 <script>
 import {HomeLayoutsWrapper, Top, HomeLayoutContentWrapper} from "./style"
 import Recommend from "../page/recommend.vue"
-import {reactive} from "vue"
+import {reactive, ref} from "vue"
 import {useRoute} from "vue-router"
 import {Toast} from "vant"
 import globalStyle from "@/assets/global-style"
@@ -58,17 +66,59 @@ export default {
       })
       const route = useRoute()
       state.tabActive = route.name
+      const themeColorShow = ref(false)
+      const actions = [
+        {
+          name: "网易红",
+          color: "rgb(229, 71, 60)"
+        },
+        {
+          name: "企鹅绿",
+          color: "rgb(49, 194, 124)"
+        },
+        {
+          name: "酷狗蓝",
+          color: "rgb(12, 142, 217)"
+        },
+        {
+          name: "虾米橙",
+          color: "rgb(255, 102, 0)"
+        },
+        {
+          name: "炫酷黑",
+          color: "rgb(34, 34, 34)"
+        },
+        {
+          name: "可爱粉",
+          color: "rgb(255, 135, 180)"
+        },
+        {
+          name: "土豪金",
+          color: "rgb(250, 172, 98)"
+        }
+      ]
       // 点击左侧菜单
       function handleClickMenu(){
+        themeColorShow.value = true
+      }
+      /**
+       * 选择对用内容的函数
+       */
+      function handleThemeSelect(action){
+        const color = action.color
+        let htmlNode = document.documentElement
+        htmlNode.style.setProperty("--USER-THEME-COLOR", color)
         Toast({
-          message: "该功能暂未开发",
-          duration: 1500
+          message: '皮肤切换成功'
         })
       }
       return {
         state,
         handleClickMenu,
-        route
+        route,
+        themeColorShow,
+        actions,
+        handleThemeSelect
       }
   },
 }

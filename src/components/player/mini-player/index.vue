@@ -13,7 +13,7 @@
       <div class="name">{{audioObj.name}}</div>
       <div class="desc">{{aral}}</div>
     </div>
-    <div class="control" @click="handleToggle">
+    <div class="control" @click.stop="handleToggle">
       <van-circle
         size=".28rem"
         stroke-width="100"
@@ -46,7 +46,7 @@
 <script>
 import { MiniPlayerStyled } from "./style";
 import globalStyle from "@/assets/global-style";
-import { computed, reactive, ref, onMounted, watch } from "vue";
+import { computed, reactive, ref} from "vue";
 import { useStore } from "vuex";
 import {SET_AUDIO_OBJ} from "@/store/modules/constant"
 
@@ -79,8 +79,7 @@ export default {
     /**
      * 点击切换音乐的播放或者暂停
      */
-    function handleToggle(e) {
-        e.stopPropagation()
+    function handleToggle() {
         let audioRef = audioObj.value.audioRef
         let playStatus = audioObj.value.playStatus
         playStatus ? audioRef.pause(): audioRef.play()

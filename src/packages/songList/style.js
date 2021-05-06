@@ -8,6 +8,15 @@ flex-direction: column;
 border-top-left-radius: 0.1rem;
 border-top-right-radius: 0.1rem;
 overflow: hidden;
+.animate_click_text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.animate_click_text.move {
+    z-index: 2
+}
 .header{
     display: flex;
     box-sizing: border-box;
