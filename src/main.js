@@ -14,4 +14,8 @@ import fastclick from "fastclick"
 import "animate.css"
 fastclick.FastClick.attach(document.body);
 const app = createApp(App)
-app.use(router).use(store).use(vant).use(Lazyload).mount('#app')
+app.use(router)
+// 由于vue-router@next版本全部采用 异步方式，为了首屏加载不出现白屏我们需要等待router准备完成之后采取挂载
+router.isReady().then(() => {
+    app.use(store).use(vant).use(Lazyload).mount('#app')
+})
