@@ -10,9 +10,11 @@
     <HomeLayoutContentWrapper>
       <van-tabs :lazy-render="true" :sticky="true" :background="state.themeColor" title-inactive-color="white" title-active-color="white" color="white" class="tabs" v-model:active="state.tabActive">
         <van-tab :name="item.name" :title="item.title" :to="item.path" v-for="(item, index) in state.tabs" :key="index">
-          <keep-alive exclude="Recommend,Rank" v-if="route.name===item.name">
-            <router-view/>
-          </keep-alive>
+            <router-view v-slot="{Component}">
+              <keep-alive exclude="Recommend,Rank" v-if="route.name===item.name">
+                <component :is="Component"></component>
+              </keep-alive>
+            </router-view>
         </van-tab>
     </van-tabs>
     </HomeLayoutContentWrapper>

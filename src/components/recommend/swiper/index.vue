@@ -7,8 +7,7 @@
 </template>
 
 <script>
-import {reactive} from "vue"
-import globalStyle from "@/assets/global-style"
+import {reactive, inject} from "vue"
 export default {
     name: "swiper",
     props: {
@@ -16,7 +15,7 @@ export default {
     },
     setup(props, ctx){
       const state = reactive({
-        themeColor : globalStyle["theme-color"]
+        themeColor: inject("themeColor"),
       })
       return {
         state

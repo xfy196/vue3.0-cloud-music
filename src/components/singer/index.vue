@@ -35,9 +35,8 @@
 
 <script>
 import { SingerContainer, ImgWrapper, CollectionButton } from "./style.js";
-import { reactive, ref, onMounted, computed, watch, nextTick } from "vue";
+import { reactive, ref, onMounted, computed, watch, nextTick, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import globalStyle from "@/assets/global-style";
 import Loading from "@/baseUI/loading/index.vue";
 import SongList from "@/packages/songList/index.vue";
 import { useStore } from "vuex";
@@ -56,7 +55,7 @@ export default {
     const store = useStore();
     const playSwitch = computed(() => store.state.playSwitch);
     const state = reactive({
-      themeColor: globalStyle["theme-color"],
+      themeColor: inject("themeColor"),
       show: false,
     });
     let id = route.params.id;

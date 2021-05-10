@@ -50,11 +50,10 @@
 </template>
 
 <script>
-import { computed, reactive, onMounted } from "vue";
+import { computed, reactive, onMounted, inject } from "vue";
 import {useStore} from "vuex"
 import TitleCom from "@/baseUI/title/index.vue";
 import { RankContainerStyled } from "./style";
-import globalStyle from "@/assets/global-style";
 import {GET_RANK_DETAIL} from "@/store/modules/constant"
 import { useRouter } from 'vue-router';
 export default {
@@ -64,7 +63,7 @@ export default {
   },
   setup() {
     const state = reactive({
-      themeColor: globalStyle["theme-color"]
+      themeColor: inject("themeColor"),
     });
     const router = useRouter()
     const store = useStore()

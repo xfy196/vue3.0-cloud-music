@@ -84,13 +84,12 @@
 import { SearchContainerStyled } from "./style";
 import {
   reactive,
-  onMounted,
   onBeforeMount,
   computed,
   onUnmounted,
   ref,
+  inject,
 } from "vue";
-import globalStyle from "@/assets/global-style";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import {
@@ -118,7 +117,7 @@ export default {
     const state = reactive({
       show: false,
       keywords: "",
-      themeColor: globalStyle["theme-color"],
+      themeColor: inject("themeColor"),
       listShow: false,
       loading: true,
     });

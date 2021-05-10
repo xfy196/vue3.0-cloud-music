@@ -85,10 +85,9 @@
 import CateScroll from "@/packages/cate-scroll/index.vue";
 import { SingersContainer } from "./style";
 import { categoryTypes, alphaTypes } from "@/config/index";
-import { reactive, onMounted, nextTick, watch, computed } from "vue";
+import { reactive, onMounted, nextTick, watch, computed, inject } from "vue";
 import { useStore } from "vuex";
 import {useRouter} from "vue-router"
-import globalStyle from "@/assets/global-style";
 import { GET_SINGERS, SET_LOADING } from "@/store/modules/constant";
 export default {
   components: {
@@ -109,7 +108,7 @@ export default {
       AlphaTypeScrollRef: null,
       hotTypeActive: -1,
       alphaTypeActive: -1,
-      themeColor: globalStyle["theme-color"],
+      themeColor: inject("themeColor"),
       loading: true,
       searchObj: {
         type: "",

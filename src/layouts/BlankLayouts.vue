@@ -9,7 +9,7 @@
 import Player from "@/components/player/index.vue";
 import { BlankStyle } from "./style";
 import {useStore} from "vuex"
-import { computed } from '@vue/runtime-core';
+import { computed } from "vue";
 export default {
   name: "BlankLayouts",
   components: {

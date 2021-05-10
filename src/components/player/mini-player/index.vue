@@ -45,8 +45,7 @@
 
 <script>
 import { MiniPlayerStyled } from "./style";
-import globalStyle from "@/assets/global-style";
-import { computed, reactive, ref} from "vue";
+import { computed, reactive, inject} from "vue";
 import { useStore } from "vuex";
 import {SET_AUDIO_OBJ} from "@/store/modules/constant"
 
@@ -62,7 +61,8 @@ export default {
     MiniPlayerStyled,
   },
   setup(props, ctx) {
-    const themeColor = ref(globalStyle["theme-color"]);
+    const themeColor = inject("themeColor")
+
     const state = reactive({
     });
 
