@@ -16,6 +16,7 @@ export const RankContainerStyled = styled.div`
     width: 1rem;
     height: 1rem;
     position: relative;
+    overflow: hidden;
     .update_frequecy {
       position: absolute;
       left: 0.07rem;

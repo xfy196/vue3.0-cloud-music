@@ -1,6 +1,6 @@
 <template>
   <MiniPlayerStyled>
-    <div class="icon">
+    <div @click="handleClick" class="icon">
       <van-image
         :class="{'miniPlayerImg': true, 'play': true, 'pause': !audioObj.playStatus}"
         width="40px"
@@ -47,7 +47,7 @@
 import { MiniPlayerStyled } from "./style";
 import { computed, reactive, inject} from "vue";
 import { useStore } from "vuex";
-import {SET_AUDIO_OBJ} from "@/store/modules/constant"
+import {SET_AUDIO_OBJ, SET_SHOW_PLAYER} from "@/store/modules/constant"
 
 export default {
   name: "mini-player",
@@ -55,6 +55,10 @@ export default {
       percent: {
           type: Number,
           default: () => 0
+      },
+      showNormal: {
+        type: Boolean,
+        required: true
       }
   },
   components: {
@@ -90,12 +94,22 @@ export default {
             }
         })
     }
+    /**
+     * 点击事件
+     */
+    function handleClick(){
+      ctx.emit("update:showNormal", true)
+      store.commit(SET_SHOW_PLAYER, {
+        data: false
+      })
+    }
     return {
       themeColor,
       state,
       handleToggle,
       audioObj,
-      aral
+      aral,
+      handleClick
     };
   },
 };

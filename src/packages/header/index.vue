@@ -1,7 +1,7 @@
 <template>
 
   <HeaderStyled>
-      <van-icon @click="handleBack" name="arrow-left" />
+      <van-icon @click="handleBack" size="0.18rem" name="arrow-left" />
       <marquee v-if="isMarquee"><h1>{{title}}</h1></marquee>
       <h1 v-else>{{title}}</h1>
   </HeaderStyled>

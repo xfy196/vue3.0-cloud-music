@@ -3,13 +3,13 @@
     <transition
       @enter="handleAnimateEnter"
       leave-active-class="animate__fadeOutRight animate__animated"
-      appear="animate__animated animate__fadeInRight"
+      appear
       enter-active-class="animate__animated animate__fadeInRight"
       duration="300"
     >
       <div v-show="state.show" class="searchContainer">
         <div class="header">
-          <van-icon color="#fff" @click="handleBack" name="arrow-left" />
+          <van-icon color="#fff" style="padding-left: 0.12rem" size=".18rem" @click="handleBack" name="arrow-left" />
           <van-search
             @clear="handleClear"
             @search="handleSearch"
