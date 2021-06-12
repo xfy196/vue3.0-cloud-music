@@ -9,6 +9,12 @@ export default defineConfig({
     resolve()
   ],
   base: "/",
+  build: {
+    rollupOptions: {
+      external: [
+      ]
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
