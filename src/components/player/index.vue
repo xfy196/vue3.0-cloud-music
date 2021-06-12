@@ -14,10 +14,17 @@
   <transition
     duration="500"
     appear
-    enter-active-class="animate__animated animate__fadeInUp"
-    leave-active-class="animate__animated animate__fadeOutDown"
+    name="normal"
+    v-on:enter="handleEnter"
+    v-on:after-leave="handleAfterLeave"
+    v-on:after-enter="handleAfterEnter"
+    v-on:leave="handleLeave"
   >
-    <NormalPlayer v-model:showNormal="showNormal" v-show="showNormal"></NormalPlayer>
+    <NormalPlayer
+      ref="NormalPlayerRef"
+      v-model:showNormal="showNormal"
+      v-if="showNormal"
+    ></NormalPlayer>
   </transition>
   <audio
     @ended="handleEnded"
@@ -29,11 +36,13 @@
 
 <script>
 import MiniPlayer from "./mini-player/index.vue";
+import { prefixStyle } from "@/utils";
 import { computed, reactive, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
 import { Toast } from "vant";
 import NormalPlayer from "./normal-player/index.vue";
+import animations from "create-keyframe-animation";
 export default {
   components: {
     MiniPlayer,
@@ -47,6 +56,8 @@ export default {
     const playSwitch = computed(() => store.state.playSwitch);
     const showNormal = ref(false);
     const audioRef = ref(null);
+    const NormalPlayerRef = ref(null);
+    const transform = ref(prefixStyle("transform"));
     onMounted(() => {
       store.commit({
         type: "play/" + SET_AUDIO_REF,
@@ -111,6 +122,97 @@ export default {
         ? 0
         : (state.currentTime * 100000) / audioObj.value.dt;
     });
+
+    function handleAfterEnter() {
+      if (!NormalPlayerRef.value) {
+        return;
+      }
+      let cdWrapperDom = NormalPlayerRef.value.LayerContainerRef;
+      // 离开之后解绑之前的animations对象注册的动画
+      animations.unregisterAnimation("move");
+      cdWrapperDom.style.animation = "";
+    }
+    /**
+     * 动画进入的阶段
+     */
+    function handleEnter(el, done) {
+      if (!NormalPlayerRef.value) {
+        return;
+      }
+      let cdWrapperDom = NormalPlayerRef.value.LayerContainerRef;
+      cdWrapperDom.style.display = "block";
+      const { x, y, scale } = _getPosAndScale();
+      let animation = {
+        0: {
+          transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+        },
+        60: {
+          transform: `translate3d(0, 0, 0) scale(1.1)`,
+        },
+        100: {
+          transform: `translate3d(0, 0, 0) scale(1)`,
+        },
+      };
+      animations.registerAnimation({
+        name: "move",
+        animation,
+        presets: {
+          duration: 400,
+          easing: "linear",
+        },
+      });
+      animations.runAnimation(cdWrapperDom, "move", done);
+    }
+    function _getPosAndScale() {
+      const targetWidth = 40;
+      const paddingLeft = 40;
+      const paddingBottom = 30;
+      const paddingTop = 80;
+      const width = window.innerWidth * 0.8;
+      const scale = targetWidth / width;
+      const x = -(window.innerWidth / 2 - paddingLeft);
+      const y = window.innerHeight - paddingTop - width / 2 - paddingBottom;
+      return {
+        x,
+        y,
+        scale,
+      };
+    }
+    /**
+     * 动画离开之后
+     */
+    function handleAfterLeave(el) {
+      let cdWrapperDom = null;
+      if (!NormalPlayerRef.value) {
+        cdWrapperDom = el.querySelector(".layerRef");
+      } else {
+        cdWrapperDom = NormalPlayerRef.value.LayerContainerRef;
+      }
+
+      cdWrapperDom.style.transition = "";
+      cdWrapperDom.style[transform.value] = "";
+    }
+    function handleLeave(el, done) {
+      let cdWrapperDom = null;
+      if (!NormalPlayerRef.value) {
+        cdWrapperDom = el.querySelector(".layerRef");
+      } else {
+        cdWrapperDom = NormalPlayerRef.value.LayerContainerRef;
+      }
+
+      // 如果不存在的时候直接就退出
+      if (!cdWrapperDom) {
+        return;
+      }
+      cdWrapperDom.addEventListener("transitionend", () => {
+        done();
+      });
+      cdWrapperDom.style.transition = "all 0.4s";
+      const { x, y, scale } = _getPosAndScale();
+      cdWrapperDom.style[
+        transform.value
+      ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+    }
     return {
       playSwitch,
       audioRef,
@@ -119,10 +221,38 @@ export default {
       handleEnded,
       handleAudioError,
       showNormal,
+      handleEnter,
+      NormalPlayerRef,
+      handleAfterEnter,
+      handleAfterLeave,
+      handleLeave,
     };
   },
 };
 </script>
 
-<style>
+<style lang="css" scoped>
+.normal-enter .top,
+.normal-exit-to .top {
+  transform: translate3d(0, -100px, 0);
+}
+.normal-enter .bottom,
+.normal-exit-done .bottom {
+  transform: translate3d(0, 100px, 0);
+}
+.normal-enter-active,
+.normal-leave-active {
+  opacity: 1;
+  transition: all 0.4s;
+}
+.normal-enter-active .top,
+.normal-enter-active .bottom,
+.normal-leave-active .top,
+.normal-leave-active .bottom {
+  transform: translate3d(0, 0, 0);
+  transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+}
+.normal-leave-active {
+  opacity: 0;
+}
 </style>
