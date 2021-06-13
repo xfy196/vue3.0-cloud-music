@@ -21,6 +21,7 @@
     v-on:leave="handleLeave"
   >
     <NormalPlayer
+      :lyric="lyric"
       ref="NormalPlayerRef"
       v-model:showNormal="showNormal"
       v-if="showNormal"
@@ -37,12 +38,13 @@
 <script>
 import MiniPlayer from "./mini-player/index.vue";
 import { prefixStyle } from "@/utils";
-import { computed, reactive, onMounted, ref } from "vue";
+import { computed, reactive, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
 import { Toast } from "vant";
 import NormalPlayer from "./normal-player/index.vue";
 import animations from "create-keyframe-animation";
+import Lyric from "@/utils/lyric-parser"
 export default {
   components: {
     MiniPlayer,
@@ -58,14 +60,44 @@ export default {
     const audioRef = ref(null);
     const NormalPlayerRef = ref(null);
     const transform = ref(prefixStyle("transform"));
+    let currentLyric = ref(null)
+    let currentLineNum = ref(0)
+    // 监听当前歌曲的index是否发生变化
+    watch(() => store.state.play.currentIndex, async () => {
+      await store.dispatch({
+        type: "play/getPlayingLyric",
+        id: audioObj.value.id
+      })
+      currentLyric = new Lyric(lyric.value, handleLyric, speed)
+      // songReady.current = true
+      currentLyric.play()
+      currentLineNum = 0
+      currentLyric.seek(0)
+    })
+
     onMounted(() => {
       store.commit({
         type: "play/" + SET_AUDIO_REF,
         data: audioRef.value,
       });
     });
+    const lyric = computed(() => store.getters["play/lyric"])
     const audioObj = computed(() => store.getters["play/audioObj"]);
     const songs = computed(() => store.getters["play/songs"]);
+    const speed = computed(() => store.getters["play/speed"])
+
+  /**
+   * 处理歌曲歌词显示的函数
+   */
+   const handleLyric = ({ lineNum, txt }) => {
+    // 不存在歌词的时候直接结束
+    if (!currentLyric) {
+      return
+    }
+    currentLineNum = lineNum
+    console.log(txt)
+    // setCurrentPlayingLyric(txt)
+  }
     /**
      * 处理时间更新
      */
@@ -226,6 +258,7 @@ export default {
       handleAfterEnter,
       handleAfterLeave,
       handleLeave,
+      lyric
     };
   },
 };

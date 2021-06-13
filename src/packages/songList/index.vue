@@ -16,7 +16,7 @@
     <ul class="songList">
       <li
         class="songItem"
-        @click="handleClickSongItem($event, item)"
+        @click="handleClickSongItem($event, item, index)"
         v-for="(item, index) in songs"
         :key="item.id"
       >
@@ -39,6 +39,7 @@ import {
   SET_AUDIO_OBJ,
   SET_SHOW_PLAYER,
   SET_PLAYER_SONGS,
+  SET_CURRENT
 } from "@/store/modules/constant";
 import { Toast } from "vant";
 export default {
@@ -100,7 +101,7 @@ export default {
     /**
      * 点击歌曲
      */
-    function handleClickSongItem(e,item) {
+    function handleClickSongItem(e,item, index=0) {
 
       let audioEle = audioObj.value.audioRef;
       if (audioObj.value.id === item.id) {
@@ -113,6 +114,12 @@ export default {
           playStatus: true,
         },
       });
+      store.commit({
+        type: "play/" + SET_CURRENT,
+        data:{
+          currentIndex: index
+        }
+      })
       store.commit({
         type: SET_SHOW_PLAYER,
         data: true,

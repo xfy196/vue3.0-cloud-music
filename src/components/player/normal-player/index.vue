@@ -40,6 +40,8 @@
                 alt=""
               />
             </div>
+            <!-- 未进入歌词状态的时候的每一行歌词 -->
+            <p class="playing_lyric">歌词</p>
           </div>
 
           <div @click="layerShow = !layerShow" class="layerBox" v-else>img</div>
@@ -65,6 +67,11 @@ export default {
       type: Boolean,
       required: true,
     },
+    lyric: {
+      type: String,
+      required: true,
+      default:""
+    }
   },
   setup(props, ctx) {
     const store = useStore();
@@ -74,6 +81,7 @@ export default {
       ctx.emit("update:showNormal", false);
       store.commit(SET_SHOW_PLAYER, { data: true });
     }
+
 
     const audioObj = computed(() => store.getters["play/audioObj"]);
     // mounted的钩子

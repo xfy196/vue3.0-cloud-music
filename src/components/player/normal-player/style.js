@@ -118,6 +118,17 @@ export const LayerContainer = styled.div`
                 border-radius: 50%;
             }
         }
+        .playing_lyric{
+            position: absolute;
+            margin: auto;
+            width: 80%;
+            top: 95vw;
+            font-size: 0.14rem;
+            line-height: 0.2rem;
+            white-space: normal;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+        }
     }
     .layerBox{
         font-size: 24px
