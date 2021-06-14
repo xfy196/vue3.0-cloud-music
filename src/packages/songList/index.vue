@@ -36,7 +36,7 @@ import globalStyle from "@/assets/global-style";
 import { computed, onMounted, ref } from "vue";
 import { useStore} from "vuex";
 import {
-  SET_AUDIO_OBJ,
+  SET_PLAYING,
   SET_SHOW_PLAYER,
   SET_PLAYER_SONGS,
   SET_CURRENT
@@ -86,10 +86,8 @@ export default {
       if (bool) {
         audioObj.value.audioRef.play()
         store.commit({
-            type: "play/" + SET_AUDIO_OBJ,
-            data: {
-                playStatus: true
-            }
+            type: "play/" + SET_PLAYING,
+            data: true
         })
         Toast({
           message: "歌曲正在播放中",
@@ -103,17 +101,10 @@ export default {
      */
     function handleClickSongItem(e,item, index=0) {
 
-      let audioEle = audioObj.value.audioRef;
       if (audioObj.value.id === item.id) {
         return;
       }
-      store.commit({
-        type: "play/" + SET_AUDIO_OBJ,
-        data: {
-          ...item,
-          playStatus: true,
-        },
-      });
+
       store.commit({
         type: "play/" + SET_CURRENT,
         data:{
@@ -128,10 +119,7 @@ export default {
         type: "play/" + SET_PLAYER_SONGS,
         data: props.songs,
       });
-      audioEle.src = `https://music.163.com/song/media/outer/url?id=${item.id}.mp3`;
-      audioEle.autoplay = true;
-      audioEle.playbackRate = audioObj.value.speed;
-      audioEle.play();
+ 
     }
     return {
       themeColor,

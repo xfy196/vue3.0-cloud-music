@@ -1,6 +1,7 @@
 import styled from "vue3-styled-components"
 import needle from "./needle.png"
 import disc from "./disc.png"
+import globalStyle from "@/assets/global-style"
 export const NormalPlayerContainer = styled.div`
     position: fixed;
     top: 0;
@@ -48,9 +49,7 @@ export const HeaderStyled = styled.div`
         line-height: 0.25rem;
         font-size: .16rem;
         color: #2E3030;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        ${globalStyle["nowrap"]}
     }
 `
 export const LayerContainer = styled.div`
@@ -117,6 +116,12 @@ export const LayerContainer = styled.div`
                 margin: auto;
                 border-radius: 50%;
             }
+            .play{
+                animation: rotate 10s infinite;
+            }
+            .pause{
+                animation-play-state: paused;
+            }
         }
         .playing_lyric{
             position: absolute;
@@ -133,4 +138,12 @@ export const LayerContainer = styled.div`
     .layerBox{
         font-size: 24px
     }
+    @keyframes rotate {
+    0%{
+        transform: rotate(0),
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
 `

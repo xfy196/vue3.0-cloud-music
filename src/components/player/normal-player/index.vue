@@ -2,7 +2,7 @@
   <NormalPlayerContainer>
     <div class="background">
       <img
-        src="https://p1.music.126.net/DG-1i1iYQ2rqC95fKA39aA==/109951163177823326.jpg?params=300x300"
+        :src="audioObj.al.picUrl"
         alt="歌曲图片"
       />
     </div>
@@ -12,8 +12,8 @@
         <van-icon @click="handleGoBack" name="arrow-down" />
       </div>
       <div class="titleBox">
-        <div class="title">小酒窝</div>
-        <div class="subTitle">林俊杰</div>
+        <div class="title">{{audioObj.name}}</div>
+        <div class="subTitle">{{aral}}</div>
       </div>
     </HeaderStyled>
     <!-- 歌词播放区 -->
@@ -32,16 +32,16 @@
             v-if="!layerShow"
           >
             <!-- 复古播放器头针图片 -->
-            <div :class="{ needle: true, pause: !audioObj.playStatus }"></div>
+            <div :class="{ needle: true, pause: !playing }"></div>
             <div class="cd">
               <img
-                class="image play pause"
-                src="https://p1.music.126.net/DG-1i1iYQ2rqC95fKA39aA==/109951163177823326.jpg?params=300x300"
+                :class="{image: true, play: playing, pause: !playing}"
+                :src="audioObj.al.picUrl"
                 alt=""
               />
             </div>
             <!-- 未进入歌词状态的时候的每一行歌词 -->
-            <p class="playing_lyric">歌词</p>
+            <p class="playing_lyric">{{currentLyricValue}}</p>
           </div>
 
           <div @click="layerShow = !layerShow" class="layerBox" v-else>img</div>
@@ -71,6 +71,10 @@ export default {
       type: String,
       required: true,
       default:""
+    },
+    currentLyricValue: {
+      type: String,
+      required: true
     }
   },
   setup(props, ctx) {
@@ -84,6 +88,14 @@ export default {
 
 
     const audioObj = computed(() => store.getters["play/audioObj"]);
+    const playing = computed(() => store.state.play.playing)
+    const aral = computed(() => {
+        try {
+            return audioObj.value.ar[0].name + "-" + audioObj.value.al.name
+        } catch (error) {
+            return ""
+        }
+    })
     // mounted的钩子
     onMounted(() => {});
     return {
@@ -91,6 +103,8 @@ export default {
       layerShow,
       audioObj,
       LayerContainerRef,
+      aral,
+      playing
     };
   },
 };

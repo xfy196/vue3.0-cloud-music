@@ -35,7 +35,10 @@ export const MiniPlayerStyled = styled.div`
     .text {
         flex: 1;
         flex-direction: column;
+        justify-content: center;
         align-items: flex-start;
+        display: flex;
+        overflow: hidden;
         .name {
             margin-bottom: 0.02rem;
             font-size: 0.12rem;

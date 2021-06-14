@@ -22,6 +22,7 @@
   >
     <NormalPlayer
       :lyric="lyric"
+      :currentLyricValue="currentLyricValue"
       ref="NormalPlayerRef"
       v-model:showNormal="showNormal"
       v-if="showNormal"
@@ -40,11 +41,17 @@ import MiniPlayer from "./mini-player/index.vue";
 import { prefixStyle } from "@/utils";
 import { computed, reactive, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { SET_AUDIO_REF, SET_AUDIO_OBJ } from "@/store/modules/constant";
+import {
+  SET_AUDIO_REF,
+  SET_AUDIO_OBJ,
+  SET_LRC,
+  SET_CURRENT,
+  SET_PLAYING
+} from "@/store/modules/constant";
 import { Toast } from "vant";
 import NormalPlayer from "./normal-player/index.vue";
 import animations from "create-keyframe-animation";
-import Lyric from "@/utils/lyric-parser"
+import Lyric from "@/utils/lyric-parser";
 export default {
   components: {
     MiniPlayer,
@@ -60,44 +67,86 @@ export default {
     const audioRef = ref(null);
     const NormalPlayerRef = ref(null);
     const transform = ref(prefixStyle("transform"));
-    let currentLyric = ref(null)
-    let currentLineNum = ref(0)
+    let currentLyric = ref(null);
+    let currentLineNum = ref(0);
+    let songReady = ref(true);
+    let currentLyricValue = ref("")
+    const lyric = computed(() => store.getters["play/lyric"]);
+    const audioObj = computed(() => store.getters["play/audioObj"]);
+    const songs = computed(() => store.getters["play/songs"]);
+    const speed = computed(() => store.getters["play/speed"]);
+    const currentIndex = computed(() => store.getters["play/currentIndex"]);
     // 监听当前歌曲的index是否发生变化
-    watch(() => store.state.play.currentIndex, async () => {
-      await store.dispatch({
-        type: "play/getPlayingLyric",
-        id: audioObj.value.id
-      })
-      currentLyric = new Lyric(lyric.value, handleLyric, speed)
-      // songReady.current = true
-      currentLyric.play()
-      currentLineNum = 0
-      currentLyric.seek(0)
-    })
+    watch(
+      [() => store.state.play.currentIndex, () => store.state.play.songs],
+      async ([currentIndex, songs]) => {
+        // 有一些特殊情况我们需要直接结束
+        if (
+          currentIndex === -1 ||
+          !songs.length ||
+          audioObj.value.id === songs[currentIndex].id ||
+          !songs[currentIndex] ||
+          !songReady.value
+        ) {
+          return;
+        }
+        // 每一次重新改变的时候我们都需要清空定时器
+        currentLyric.value ? currentLyric.value.stop() : "";
+        songReady.value = false;
+        // 重新设置歌词
+        store.commit({
+          type: "play/" + SET_LRC,
+          data: "",
+        });
+        await changeSong();
+    //      // 设置播放状态
+    // togglePlayingDispatch(true);
+    // // 设置当前歌曲时间播放点
+    // setCurrentTime(0);
+    // // 设置总秒数
+    // setDuration((current.dt / 1000) | 0);
+        getLyric(currentIndex);
+      }
+    );
 
+    watch(
+      [songReady, () => store.state.play.playing],
+      ([preSongReady], [nextSongReady]) => {
+        preSongReady && store.state.play.playing ? audioRef.value.play() : audioRef.value.pause();
+      }
+    );
     onMounted(() => {
       store.commit({
         type: "play/" + SET_AUDIO_REF,
         data: audioRef.value,
       });
     });
-    const lyric = computed(() => store.getters["play/lyric"])
-    const audioObj = computed(() => store.getters["play/audioObj"]);
-    const songs = computed(() => store.getters["play/songs"]);
-    const speed = computed(() => store.getters["play/speed"])
 
-  /**
-   * 处理歌曲歌词显示的函数
-   */
-   const handleLyric = ({ lineNum, txt }) => {
-    // 不存在歌词的时候直接结束
-    if (!currentLyric) {
-      return
+    /**
+     * 获取歌词的操作
+     */
+    async function getLyric(index) {
+      await store.dispatch({
+        type: "play/getPlayingLyric",
+        id: songs.value[index].id,
+      });
+      currentLyric.value = new Lyric(lyric.value, handleLyric, speed);
+      currentLyric.value.play();
+      songReady.value = true;
+      currentLineNum.value = 0;
+      currentLyric.value.seek(0);
     }
-    currentLineNum = lineNum
-    console.log(txt)
-    // setCurrentPlayingLyric(txt)
-  }
+    /**
+     * 处理歌曲歌词显示的函数
+     */
+    const handleLyric = ({ lineNum, txt }) => {
+      // 不存在歌词的时候直接结束
+      if (!currentLyric) {
+        return;
+      }
+      currentLineNum.value = lineNum;
+      currentLyricValue.value = txt
+    };
     /**
      * 处理时间更新
      */
@@ -125,29 +174,34 @@ export default {
      */
     function changeSong() {
       let audioEle = audioObj.value.audioRef;
-      audioEle.pause();
       // 如果结束就需要切换歌曲
-      let id = audioObj.value.id;
-      let index = songs.value.findIndex((item) => {
-        if (item.id === id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (index === songs.value.length - 1 || index < 0) {
-        index = 0;
+      let index = currentIndex.value;
+      if (
+        index === songs.value.length - 1 ||
+        index < 0 || !audioObj.id
+      ) {
       } else {
-        index++;
+        index += 1;
       }
       store.commit({
-        type: "play/" + SET_AUDIO_OBJ,
+        type: "play/" + SET_CURRENT,
         data: {
-          ...songs.value[index],
+          currentIndex: index,
         },
       });
-      audioEle.src = `https://music.163.com/song/media/outer/url?id=${songs.value[index].id}.mp3`;
-      audioEle.play();
+      store.commit({
+        type: "play/" + SET_AUDIO_OBJ,
+        data: songs.value[index]
+      });
+      store.commit({
+        type: "play/"+SET_PLAYING,
+        data: true
+      })
+      audioEle.src = `https://music.163.com/song/media/outer/url?id=${
+        songs.value[index].id
+      }.mp3`;
+      audioEle.autoplay = true;
+      audioEle.playbackRate = audioObj.value.speed;
     }
     const percent = computed(() => {
       return isNaN((state.currentTime * 100000) / audioObj.value.dt)
@@ -258,7 +312,8 @@ export default {
       handleAfterEnter,
       handleAfterLeave,
       handleLeave,
-      lyric
+      lyric,
+      currentLyricValue
     };
   },
 };

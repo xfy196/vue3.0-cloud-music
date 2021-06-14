@@ -2,7 +2,7 @@
   <MiniPlayerStyled>
     <div @click="handleClick" class="icon">
       <van-image
-        :class="{'miniPlayerImg': true, 'play': true, 'pause': !audioObj.playStatus}"
+        :class="{'miniPlayerImg': true, 'play': true, 'pause': !playing}"
         width="40px"
         height="40px"
         round
@@ -23,7 +23,7 @@
       >
         <slot>
           <van-icon
-            v-if="!audioObj.playStatus"
+            v-if="!playing"
             size="0.28rem"
             color="rgba(212,68,57,.5)"
             name="play-circle-o"
@@ -45,9 +45,9 @@
 
 <script>
 import { MiniPlayerStyled } from "./style";
-import { computed, reactive, inject} from "vue";
+import { computed, reactive, inject, watch} from "vue";
 import { useStore } from "vuex";
-import {SET_AUDIO_OBJ, SET_SHOW_PLAYER} from "@/store/modules/constant"
+import {SET_PLAYING, SET_SHOW_PLAYER} from "@/store/modules/constant"
 
 export default {
   name: "mini-player",
@@ -72,7 +72,10 @@ export default {
 
     const store = useStore();
 
-    const audioObj = computed(() => store.getters["play/audioObj"]);
+    watch(() => store.getters["play/audioObj"], (pre) => {
+    })
+    const audioObj = computed(() => ({...store.getters["play/audioObj"]}));
+    const playing = computed(() => store.state.play.playing)
     const aral = computed(() => {
         try {
             return audioObj.value.ar[0].name + "-" + audioObj.value.al.name
@@ -85,13 +88,10 @@ export default {
      */
     function handleToggle() {
         let audioRef = audioObj.value.audioRef
-        let playStatus = audioObj.value.playStatus
-        playStatus ? audioRef.pause(): audioRef.play()
+        playing.value ? audioRef.pause(): audioRef.play()
         store.commit({
-            type: "play/" + SET_AUDIO_OBJ,
-            data: {
-                playStatus: !playStatus
-            }
+            type: "play/" + SET_PLAYING,
+            data: !playing.value
         })
     }
     /**
@@ -109,7 +109,8 @@ export default {
       handleToggle,
       audioObj,
       aral,
-      handleClick
+      handleClick,
+      playing
     };
   },
 };

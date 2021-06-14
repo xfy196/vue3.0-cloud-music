@@ -25,6 +25,7 @@ export const SET_SHOW_PLAYER = "set_show_player"
 export const SET_PLAYER_SONGS = "set_player_songs"
 export const SET_CURRENT = "set_current"
 export const SET_LRC = "set_lrc"
+export const SET_PLAYING = "set_playing"
 
 // singer
 export const GET_SINGER_SONGS = "get_singer_songs"

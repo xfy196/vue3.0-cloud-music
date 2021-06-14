@@ -1,11 +1,10 @@
 import request from "@/request/http"
-import {SET_AUDIO_REF, SET_AUDIO_OBJ, SET_PLAYER_SONGS, SET_CURRENT, SET_LRC} from "./constant"
+import {SET_AUDIO_REF, SET_AUDIO_OBJ, SET_PLAYER_SONGS, SET_CURRENT, SET_LRC, SET_PLAYING } from "./constant"
 export default {
     state: () => {
         return {
             audioObj: {
                 audioRef: null,
-                playStatus: false,
                 currentRate: 0,
                 name: "",
                 al: "",
@@ -17,6 +16,7 @@ export default {
             songs: [],
             speed: 1,
             currentIndex: -1,
+            playing: false,
             lrc: {
                 lyric: "",
                 version: 0
@@ -41,6 +41,9 @@ export default {
         },
         [SET_LRC](state, payload){
           state.lrc = payload
+        },
+        [SET_PLAYING](state, payload){
+            state.playing = payload.data
         }
     },
     actions: {
@@ -67,7 +70,10 @@ export default {
         },
         speed: (state) => {
             return state.speed
-        }
+        },
+        currentIndex: (state) => {
+            return state.currentIndex
+        },
     },
     namespaced: true
 }

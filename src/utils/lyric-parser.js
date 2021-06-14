@@ -111,13 +111,11 @@ export default class Lyric {
             return
         }
         this.state = STATE_PLAYING
-
         this.curLineIndex = this._findcurLineIndex(offset)
         //现在正处于第this.curLineIndex-1行
         this._callHandler(this.curLineIndex - 1)
         this.offset = offset
         this.startStamp = new Date() - offset
-
         if (this.curLineIndex < this.lines.length) {
             this.reset()
             this._playRest(isSeek)
