@@ -44,6 +44,7 @@ export const MiniPlayerStyled = styled.div`
             font-size: 0.12rem;
         }
         .desc{
+            width: 100%;
             font-size: 0.12rem;
             color: #bba8a8;
             ${globalStyle["noWrap"]};
