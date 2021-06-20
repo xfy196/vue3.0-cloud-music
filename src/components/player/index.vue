@@ -225,7 +225,7 @@ export default {
             type: "play/" + SET_PLAYING,
             data: !playing.value
         })
-        if(currentLyric.value){
+        if(currentLyric.value && store.state.play.playing && songReady){
           currentLyric.value.togglePlay(state.currentTime * 1000)
         }
     }
