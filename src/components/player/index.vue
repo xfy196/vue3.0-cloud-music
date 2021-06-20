@@ -10,6 +10,7 @@
       v-model:showNormal="showNormal"
       :percent="percent"
       @handleToggle="handleToggle"
+      :songReady="songReady"
     ></MiniPlayer>
   </transition>
   <transition
@@ -116,7 +117,7 @@ export default {
     watch(
       [songReady, () => store.state.play.playing],
       ([preSongReady], [nextSongReady]) => {
-        console.log(preSongReady && store.state.play.playing)
+        console.log(store.state.play.playing)
         preSongReady && store.state.play.playing ? audioRef.value.play() : audioRef.value.pause();
       }
     );
@@ -183,11 +184,12 @@ export default {
       let index = currentIndex.value;
       if (
         index === songs.value.length - 1 ||
-        index < 0 || !audioObj.id
+        index < 0
       ) {
       } else {
         index += 1;
       }
+
       store.commit({
         type: "play/" + SET_CURRENT,
         data: {
@@ -335,7 +337,8 @@ export default {
       lyric,
       currentLyricValue,
       handleToggle,
-      speed
+      speed,
+      songReady
     };
   },
 };

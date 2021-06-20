@@ -23,17 +23,18 @@
       >
         <slot>
           <van-icon
-            v-if="!playing"
+            v-if="playing && songReady"
             size="0.28rem"
             color="rgba(212,68,57,.5)"
-            name="play-circle-o"
+            name="pause-circle-o"
           />
           <van-icon
             v-else
             size="0.28rem"
             color="rgba(212,68,57,.5)"
-            name="pause-circle-o"
+            name="play-circle-o"
           />
+   
         </slot>
       </van-circle>
     </div>
@@ -57,6 +58,10 @@ export default {
           default: () => 0
       },
       showNormal: {
+        type: Boolean,
+        required: true
+      },
+      songReady: {
         type: Boolean,
         required: true
       }
