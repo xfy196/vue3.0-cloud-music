@@ -49,7 +49,7 @@ import {
   SET_AUDIO_OBJ,
   SET_LRC,
   SET_CURRENT,
-  SET_PLAYING
+  SET_PLAYING,
 } from "@/store/modules/constant";
 import { Toast } from "vant";
 import NormalPlayer from "./normal-player/index.vue";
@@ -65,26 +65,43 @@ export default {
       currentTime: 0,
     });
     const store = useStore();
+    // 播放器显示或者隐藏的开关
     const playSwitch = computed(() => store.state.playSwitch);
+    // 是否显示大的播放器
     const showNormal = ref(false);
+    // 音频对象实例
     const audioRef = ref(null);
+    // 大的播放器实例
     const NormalPlayerRef = ref(null);
     const transform = ref(prefixStyle("transform"));
+    // 当前歌词实例
     let currentLyric = ref(null);
+    // 当前歌词的行数
     let currentLineNum = ref(0);
+    // 歌曲播放是否已就绪
     let songReady = ref(true);
-    let currentLyricValue = ref("")
+    // 当前每一行的歌词
+    let currentLyricValue = ref("");
+    // 是否播放错误
+    const isError = ref(false);
+    // 后台接口的歌词对象，包含歌词的数据和当前歌词的版本
     const lyric = computed(() => store.getters["play/lyric"]);
+    // 音频对象
     const audioObj = computed(() => store.getters["play/audioObj"]);
+    // 歌曲列表数据
     const songs = computed(() => store.getters["play/songs"]);
+    // 当前音乐的播放速度
     const speed = computed(() => store.getters["play/speed"]);
+    // 当前歌曲的在songs的下标
     const currentIndex = computed(() => store.getters["play/currentIndex"]);
-    const playing = computed(() => store.state.play.playing)
+    // 当前歌曲播放状态
+    const playing = computed(() => store.state.play.playing);
 
     // 监听当前歌曲的index是否发生变化
     watch(
       [() => store.state.play.currentIndex, () => store.state.play.songs],
       async ([currentIndex, songs]) => {
+        console.log("adasd");
         // 有一些特殊情况我们需要直接结束
         if (
           currentIndex === -1 ||
@@ -104,21 +121,24 @@ export default {
           data: "",
         });
         await changeSong();
-    //      // 设置播放状态
-    // togglePlayingDispatch(true);
-    // // 设置当前歌曲时间播放点
-    // setCurrentTime(0);
-    // // 设置总秒数
-    // setDuration((current.dt / 1000) | 0);
-        getLyric(currentIndex);
       }
     );
 
+    /**
+     * 监听歌曲错误状态
+     */
+    watch(isError, (preError) => {
+      // 没有发生错误的时候去请求歌词接口
+      if (!preError.value) {
+        getLyric(currentIndex.value);
+      }
+    });
     watch(
       [songReady, () => store.state.play.playing],
       ([preSongReady], [nextSongReady]) => {
-        console.log(store.state.play.playing)
-        preSongReady && store.state.play.playing ? audioRef.value.play() : audioRef.value.pause();
+        preSongReady && store.state.play.playing
+          ? (audioRef.value.play(), (isError.value = false))
+          : audioRef.value.pause();
       }
     );
     onMounted(() => {
@@ -151,7 +171,7 @@ export default {
         return;
       }
       currentLineNum.value = lineNum;
-      currentLyricValue.value = txt
+      currentLyricValue.value = txt;
     };
     /**
      * 处理时间更新
@@ -167,14 +187,24 @@ export default {
       Toast({
         message: "歌曲播放错误, 自动切换下一首",
       });
-      currentIndex.value+=1
-      changeSong();
+      store.commit({
+        type: "play/" + SET_CURRENT,
+        data: {
+          currentIndex: currentIndex.value + 1,
+        },
+      });
+      isError.value = true;
     }
     /**
      * 处理歌曲播放结束
      */
     function handleEnded() {
-      changeSong();
+      store.commit({
+        type: "play/" + SET_CURRENT,
+        data: {
+          currentIndex: currentIndex.value + 1,
+        },
+      });
     }
     /**
      * 切换歌曲
@@ -183,13 +213,6 @@ export default {
       let audioEle = audioObj.value.audioRef;
       // 如果结束就需要切换歌曲
       let index = currentIndex.value;
-      if (
-        index === songs.value.length - 1 ||
-        index < 0 || !audioObj.id
-      ) {
-      } else {
-        index += 1;
-      }
 
       store.commit({
         type: "play/" + SET_CURRENT,
@@ -199,17 +222,16 @@ export default {
       });
       store.commit({
         type: "play/" + SET_AUDIO_OBJ,
-        data: songs.value[index]
+        data: songs.value[index],
       });
       store.commit({
-        type: "play/"+SET_PLAYING,
-        data: true
-      })
-      audioEle.src = `https://music.163.com/song/media/outer/url?id=${
-        songs.value[index].id
-      }.mp3`;
+        type: "play/" + SET_PLAYING,
+        data: true,
+      });
+      audioEle.src = `https://music.163.com/song/media/outer/url?id=${songs.value[index].id}.mp3`;
       audioEle.autoplay = true;
       audioEle.playbackRate = audioObj.value.speed;
+      songReady.value = true;
     }
     const percent = computed(() => {
       return isNaN((state.currentTime * 100000) / audioObj.value.dt)
@@ -217,20 +239,18 @@ export default {
         : (state.currentTime * 100000) / audioObj.value.dt;
     });
 
-
     // 点击播放器暂停或者播放
-    function handleToggle(){
-      let audioRef = audioObj.value.audioRef
-        playing.value ? audioRef.pause(): audioRef.play()
-        store.commit({
-            type: "play/" + SET_PLAYING,
-            data: !playing.value
-        })
-        if(currentLyric.value && store.state.play.playing && songReady){
-          currentLyric.value.togglePlay(state.currentTime * 1000)
-        }
+    function handleToggle() {
+      let audioRef = audioObj.value.audioRef;
+      playing.value ? audioRef.pause() : audioRef.play();
+      store.commit({
+        type: "play/" + SET_PLAYING,
+        data: !playing.value,
+      });
+      if (currentLyric.value && store.state.play.playing && songReady) {
+        currentLyric.value.togglePlay(state.currentTime * 1000);
+      }
     }
-
 
     function handleAfterEnter() {
       if (!NormalPlayerRef.value) {
@@ -339,7 +359,7 @@ export default {
       currentLyricValue,
       handleToggle,
       speed,
-      songReady
+      songReady,
     };
   },
 };
