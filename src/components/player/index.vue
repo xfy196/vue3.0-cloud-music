@@ -167,6 +167,7 @@ export default {
       Toast({
         message: "歌曲播放错误, 自动切换下一首",
       });
+      currentIndex.value+=1
       changeSong();
     }
     /**
@@ -184,7 +185,7 @@ export default {
       let index = currentIndex.value;
       if (
         index === songs.value.length - 1 ||
-        index < 0
+        index < 0 || !audioObj.id
       ) {
       } else {
         index += 1;
