@@ -9,6 +9,7 @@
       v-show="playSwitch"
       v-model:showNormal="showNormal"
       :percent="percent"
+      @handleToggle="handleToggle"
     ></MiniPlayer>
   </transition>
   <transition
@@ -26,6 +27,7 @@
       ref="NormalPlayerRef"
       v-model:showNormal="showNormal"
       v-if="showNormal"
+      :speed="speed"
     ></NormalPlayer>
   </transition>
   <audio
@@ -76,6 +78,8 @@ export default {
     const songs = computed(() => store.getters["play/songs"]);
     const speed = computed(() => store.getters["play/speed"]);
     const currentIndex = computed(() => store.getters["play/currentIndex"]);
+    const playing = computed(() => store.state.play.playing)
+
     // 监听当前歌曲的index是否发生变化
     watch(
       [() => store.state.play.currentIndex, () => store.state.play.songs],
@@ -112,6 +116,7 @@ export default {
     watch(
       [songReady, () => store.state.play.playing],
       ([preSongReady], [nextSongReady]) => {
+        console.log(preSongReady && store.state.play.playing)
         preSongReady && store.state.play.playing ? audioRef.value.play() : audioRef.value.pause();
       }
     );
@@ -208,6 +213,21 @@ export default {
         ? 0
         : (state.currentTime * 100000) / audioObj.value.dt;
     });
+
+
+    // 点击播放器暂停或者播放
+    function handleToggle(){
+      let audioRef = audioObj.value.audioRef
+        playing.value ? audioRef.pause(): audioRef.play()
+        store.commit({
+            type: "play/" + SET_PLAYING,
+            data: !playing.value
+        })
+        if(currentLyric.value){
+          currentLyric.value.togglePlay(state.currentTime * 1000)
+        }
+    }
+
 
     function handleAfterEnter() {
       if (!NormalPlayerRef.value) {
@@ -313,7 +333,9 @@ export default {
       handleAfterLeave,
       handleLeave,
       lyric,
-      currentLyricValue
+      currentLyricValue,
+      handleToggle,
+      speed
     };
   },
 };

@@ -47,7 +47,7 @@
 import { MiniPlayerStyled } from "./style";
 import { computed, reactive, inject, watch} from "vue";
 import { useStore } from "vuex";
-import {SET_PLAYING, SET_SHOW_PLAYER} from "@/store/modules/constant"
+import {SET_SHOW_PLAYER} from "@/store/modules/constant"
 
 export default {
   name: "mini-player",
@@ -87,12 +87,7 @@ export default {
      * 点击切换音乐的播放或者暂停
      */
     function handleToggle() {
-        let audioRef = audioObj.value.audioRef
-        playing.value ? audioRef.pause(): audioRef.play()
-        store.commit({
-            type: "play/" + SET_PLAYING,
-            data: !playing.value
-        })
+        ctx.emit("handleToggle")
     }
     /**
      * 点击事件

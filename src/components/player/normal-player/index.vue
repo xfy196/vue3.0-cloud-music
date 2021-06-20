@@ -48,19 +48,31 @@
         </transition>
       </div>
     </LayerContainer>
+    <Bottom>
+      <List>
+        <span>倍速听歌</span>
+        <ListItem :selected="speed===item.key" v-for="item in speedList" :key="item.key">
+          {{item.name}}
+        </ListItem>
+      </List>
+    </Bottom>
   </NormalPlayerContainer>
 </template>
 
 <script>
-import { NormalPlayerContainer, HeaderStyled, LayerContainer } from "./style";
+import { NormalPlayerContainer, HeaderStyled, LayerContainer, Bottom, List, ListItem } from "./style";
 import { SET_SHOW_PLAYER } from "@/store/modules/constant";
 import { useStore } from "vuex";
 import { ref, computed, onMounted } from "vue";
+import {list} from "@/config/index"
 export default {
   components: {
     NormalPlayerContainer,
     HeaderStyled,
     LayerContainer,
+    List,
+    Bottom,
+    ListItem
   },
   props: {
     showNormal: {
@@ -75,9 +87,14 @@ export default {
     currentLyricValue: {
       type: String,
       required: true
+    },
+    speed: {
+      type: Number,
+      required: true
     }
   },
   setup(props, ctx) {
+    const speedList = ref(list)
     const store = useStore();
     const layerShow = ref(false);
     const LayerContainerRef = ref(null);
@@ -104,7 +121,8 @@ export default {
       audioObj,
       LayerContainerRef,
       aral,
-      playing
+      playing,
+      speedList
     };
   },
 };
